@@ -1,4 +1,4 @@
-# Beauty
+# Refill App
 
 > Beauty Service
 
