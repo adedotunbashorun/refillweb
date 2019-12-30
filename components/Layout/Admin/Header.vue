@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<nuxt-link to="/admin/dashboard"><img src="/images/servme-logo-dark.png" style="width:50px;height:30px;" alt="ServeMe Logo" class="img-responsive logo"></nuxt-link>
+				<nuxt-link to="/admin/dashboard"><img src="/images/refill-logo.png" style="width:50px;height:30px;" alt="ServeMe Logo" class="img-responsive logo"></nuxt-link>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
