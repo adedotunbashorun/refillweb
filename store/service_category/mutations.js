@@ -1,78 +1,78 @@
 
 import {
-  ADD_QUESTION,
-  ADD_QUESTION_SUCCESS,
-  QUESTION_BY_ID,
-  QUESTION_BY_ID_SUCCESS,
-  UPDATE_QUESTION,
-  UPDATE_QUESTION_SUCCESS,
-  REMOVE_QUESTION,
-  REMOVE_QUESTION_SUCCESS,
-  REMOVE_QUESTION_FAILURE,
-  ALL_QUESTIONS,
-  ALL_QUESTIONS_SUCCESS,
+  ADD_SUBCATEGORY,
+  ADD_SUBCATEGORY_SUCCESS,
+  SUBCATEGORY_BY_ID,
+  SUBCATEGORY_BY_ID_SUCCESS,
+  UPDATE_SUBCATEGORY,
+  UPDATE_SUBCATEGORY_SUCCESS,
+  REMOVE_SUBCATEGORY,
+  REMOVE_SUBCATEGORY_SUCCESS,
+  REMOVE_SUBCATEGORY_FAILURE,
+  ALL_SUBCATEGORIES,
+  ALL_SUBCATEGORIES_SUCCESS,
   ERROR_MSG,
-  QUESTION_BY_ID_FAILURE,
-  ALL_QUESTIONS_FAILURE,
-  UPDATE_QUESTION_FAILURE,
-  ADD_QUESTION_FAILURE,
+  SUBCATEGORY_BY_ID_FAILURE,
+  ALL_SUBCATEGORIES_FAILURE,
+  UPDATE_SUBCATEGORY_FAILURE,
+  ADD_SUBCATEGORY_FAILURE,
 } from './mutation-types'
 
 export const mutations = {
-  [ALL_QUESTIONS] (state) {
+  [ALL_SUBCATEGORIES] (state) {
     state.showLoader = true
   },
-  [ALL_QUESTIONS_SUCCESS] (state, payload) {
+  [ALL_SUBCATEGORIES_SUCCESS] (state, payload) {
     state.showLoader = false
     state.service_categories = payload.subcategories
   },
-  [ALL_QUESTIONS_FAILURE](state, payload) {
+  [ALL_SUBCATEGORIES_FAILURE](state, payload) {
     state.showLoader = false
     state.error = payload
-    state.questions = []
+    state.SUBCATEGORYs = []
   },
 
-  [QUESTION_BY_ID] (state) {
+  [SUBCATEGORY_BY_ID] (state) {
     state.showLoader = true
   },
-  [QUESTION_BY_ID_SUCCESS] (state, payload) {
+  [SUBCATEGORY_BY_ID_SUCCESS] (state, payload) {
     state.showLoader = false
   },
-  [QUESTION_BY_ID_FAILURE](state, payload) {
+  [SUBCATEGORY_BY_ID_FAILURE](state, payload) {
     state.showLoader = false
     state.error = payload
   },
-  [ADD_QUESTION]: (state) => {
+  [ADD_SUBCATEGORY]: (state) => {
     state.showLoader = true
   },
-  [ADD_QUESTION_SUCCESS]: (state, payload) => {
+  [ADD_SUBCATEGORY_SUCCESS]: (state, payload) => {
     state.showLoader = false
   },
-  [ADD_QUESTION_FAILURE]: (state, payload) => {
+  [ADD_SUBCATEGORY_FAILURE]: (state, payload) => {
     state.showLoader = false
     state.error = payload
   },
-  [UPDATE_QUESTION]: (state) => {
+  [UPDATE_SUBCATEGORY]: (state) => {
     state.showLoader = true
   },
-  [UPDATE_QUESTION_SUCCESS]: (state, payload) => {
+  [UPDATE_SUBCATEGORY_SUCCESS]: (state, payload) => {
     state.showLoader = false
     state.service_category = payload.subcategory
   },
-  [UPDATE_QUESTION_FAILURE]: (state, payload) => {
+  [UPDATE_SUBCATEGORY_FAILURE]: (state, payload) => {
     state.showLoader = false
     state.error = payload
   },
-  [REMOVE_QUESTION]: (state, payload) => {
+  [REMOVE_SUBCATEGORY]: (state, payload) => {
     state.showLoader = true
   },
-  [REMOVE_QUESTION_SUCCESS]: (state, payload) => {
+  [REMOVE_SUBCATEGORY_SUCCESS]: (state, payload) => {
     state.showLoader = false
     const index = state.service_category.findIndex(service_category => service_category._id === payload)
     console.debug('index', index)
     state.service_category.splice(index, 1)
   },
-  [REMOVE_QUESTION_FAILURE]: (state, payload) => {
+  [REMOVE_SUBCATEGORY_FAILURE]: (state, payload) => {
     state.showLoader = false
   },
   [ERROR_MSG] (state, payload) {}

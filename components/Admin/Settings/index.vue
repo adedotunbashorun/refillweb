@@ -72,9 +72,9 @@
                     <input type="text" class="form-control" v-model="settings.pusher_app_encrypted" placeholder="Pusher Encryption" aria-describedby="basic-addon1">
                 </div>
 
-                <div class="form-group">
+                <!-- <div class="form-group">
                     <input type="file" class="form-control" @change="onFileChange">
-                </div>
+                </div> -->
 
                 <div class="form-group">
                     <textarea type="text" class="form-control" placeholder="Description" v-model="settings.description" rows="4" aria-describedby="basic-addon1">
@@ -103,11 +103,10 @@ export default {
     data(){
         return {
             errors: [],
+            id: null,
             settings: {
                 app_name:'',
                 email:'',
-                logo:'',
-                background_image:'',
                 paystack_live_public_key:'',
                 paystack_secret_public_key:'',
                 pusher_app_id: '',
@@ -130,6 +129,7 @@ export default {
     methods: {
         register(){
             let component = this;
+            (this.id !== null) ? component.settings.id = this.id : ''
             this.$store.dispatch('addSettings', [component.settings,this.$store.state.auth.headers])
             .then((resp) => {
                this.error = ''
@@ -142,6 +142,7 @@ export default {
                   this.success = ''
                   this.success = resp.data.msg
                   this.errors = []
+                  this.allSettings()
                 }
             })
             .catch(err => {
@@ -171,7 +172,7 @@ export default {
           this.$store.dispatch('allSettings', this.$store.state.auth.headers)
             .then((resp) => {
               (resp.data.settings == null) ? '' : this.settings = resp.data.settings.data
-
+              this.id = resp.data.settings._id
             }).catch(err =>{
 
             })

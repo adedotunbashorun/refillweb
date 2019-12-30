@@ -1,8 +1,7 @@
 <template>
-    <CreateQuestion :categories="categories" :page="page" />
+    <CreateSubCategory :categories="categories" :page="page" />
 </template>
 <script>
-import CreateQuestion from '~/components/Admin/ServiceCategory/add.vue'
 export default {
     layout: 'admin',
     data(){
@@ -13,7 +12,7 @@ export default {
         }
     },
     components:{
-        CreateQuestion
+        CreateSubCategory: () => import('~/components/Admin/ServiceCategory/add.vue')
     },
     mounted(){
         this.allCategories()

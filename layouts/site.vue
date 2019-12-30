@@ -1,6 +1,9 @@
 <template>
     <div>
+        <Header />
         <nuxt />
+        <Footer />
+        <a href="javascript:void(0)" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
     </div>
 </template>
 <script>
@@ -10,18 +13,37 @@ export default {
     head () {
         return {
             bodyAttrs: {
-                id: 'page-top'
+                id: 'back-to-top'
             },
             link: [
-                { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css', integrity: "sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T",crossorigin:'anonymous' },
-                { rel: 'stylesheet', href: 'https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js' },
-                { rel: 'https://use.fontawesome.com/releases/v5.8.2/css/all.css'}
+                { href: "https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,700,700i|Roboto:100,300,400,500,700|Philosopher:400,400i,700,700i" , rel:"stylesheet"},
+
+                { href: "/frontend/lib/bootstrap/css/bootstrap.min.css" , rel:"stylesheet"},
+                { href: "/frontend/lib/owlcarousel/assets/owl.carousel.min.css" , rel:"stylesheet"},
+                { href: "/frontend/lib/owlcarousel/assets/owl.theme.default.min.css" , rel:"stylesheet"},
+                { href: "/frontend/lib/font-awesome/css/font-awesome.min.css" , rel:"stylesheet"},
+                { href: "/frontend/lib/animate/animate.min.css" , rel:"stylesheet"},
+                { href: "/frontend/lib/modal-video/css/modal-video.min.css" , rel:"stylesheet"},
+                { href: "/frontend/css/style.css" , rel:"stylesheet"}
             ],
             script: [
-                { src: 'https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.slim.min.js' },
-
+                { src: '/frontend/lib/jquery/jquery.min.js' },
+                { src: '/frontend/lib/jquery/jquery-migrate.min.js' },
+                { src: '/frontend/lib/bootstrap/js/bootstrap.bundle.min.js' },
+                { src: '/frontend/lib/superfish/hoverIntent.js' },
+                { src: '/frontend/lib/superfish/superfish.min.js' },
+                { src: '/frontend/lib/easing/easing.min.js' },
+                { src: '/frontend/lib/modal-video/js/modal-video.js' },
+                { src: '/frontend/lib/owlcarousel/owl.carousel.min.js' },
+                { src: '/frontend/lib/wow/wow.min.js' },
+                { src: '/frontend/contactform/contactform.js' },
+                { src: '/frontend/js/main.js' },
             ]
         }
-    }
+    },
+    components: {
+        Header: () => import('~/components/Layout/Frontend/Header.vue'),
+        Footer: () => import('~/components/Layout/Frontend/Footer.vue'),
+    },
 }
 </script>

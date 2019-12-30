@@ -4,6 +4,9 @@ import {
   ADD_SETTINGS,
   ADD_SETTINGS_SUCCESS,
   ADD_SETTINGS_FAILURE,
+  ALL_DATA,
+  ALL_DATA_SUCCESS,
+  ALL_DATA_FAILURE,
   SETTINGS_BY_ID,
   SETTINGS_BY_ID_SUCCESS,
   SETTINGS_BY_ID_FAILURE,
@@ -89,6 +92,19 @@ export const actions = {
         resolve(response)
       }).catch(err => {
         commit(UPDATE_SETTINGS_FAILURE, err)
+        reject(err)
+      })
+    })
+  },
+
+  allCounts ({commit}, header) {
+    commit(ALL_DATA)
+    return new Promise((resolve, reject) => {
+      Api.Settings.allCount(header).then(response => {
+        commit(ALL_DATA_SUCCESS, response.data)
+        resolve(response)
+      }).catch(err => {
+        commit(ALL_DATA_FAILURE, err)
         reject(err)
       })
     })

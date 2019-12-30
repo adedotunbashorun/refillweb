@@ -38,6 +38,18 @@ const approveUser = (data,header) => {
   })
 }
 
+const toggleUserOnlineStatus = (data,header) => {
+  return new Promise((resolve, reject) => {
+      axios.get(config.apiUrl + '/api/toggle_online_status/'+ data, { headers: { Authorization: header } })
+          .then(resp => {
+              resolve(resp)
+          })
+          .catch(err => {
+              reject(err)
+          })
+  })
+}
+
 const activateUser = (data) => {
   return new Promise((resolve, reject) => {
       axios.patch(config.apiUrl + '/api/activates/'+ data)
@@ -62,30 +74,6 @@ const userById = (data, header) => {
     })
 }
 
-const getUserCompany = (data, header) => {
-  return new Promise((resolve, reject) => {
-      axios.get(config.apiUrl + '/api/companies/'+data, {headers:{ Authorization: header}})
-          .then(resp => {
-              resolve(resp)
-          })
-          .catch(err => {
-              reject(err)
-          })
-  })
-}
-
-const getUnassignRider = (header) => {
-  return new Promise((resolve, reject) => {
-      axios.get(config.apiUrl + '/api/unassigned/riders', {headers:{ Authorization: header}})
-          .then(resp => {
-              resolve(resp)
-          })
-          .catch(err => {
-              reject(err)
-          })
-  })
-}
-
 const forgetPassword = (data) => {
     return new Promise((resolve, reject) => {
         axios.post(config.apiUrl + '/api/forget_password', data)
@@ -100,7 +88,7 @@ const forgetPassword = (data) => {
 
 const register = (data, header) => {
     return new Promise((resolve, reject) => {
-        axios.post(config.apiUrl + '/api/register', data)
+        axios.post(config.apiUrl + '/api/register', data, { headers: { Authorization: header } })
             .then(resp => {
                 resolve(resp)
             })
@@ -120,18 +108,6 @@ const update = (data, header) => {
                 reject(err)
             })
     })
-}
-
-const assignCompanyRider = (data, header) => {
-  return new Promise((resolve, reject) => {
-      axios.post(config.apiUrl + '/api/add_rider', data, { headers: { Authorization: header } })
-          .then(resp => {
-              resolve(resp)
-          })
-          .catch(err => {
-              reject(err)
-          })
-  })
 }
 
 const activity = (data,header) => {
@@ -181,7 +157,5 @@ export const User = {
     allUser,
     userById,
     deleteUser,
-    getUnassignRider,
-    getUserCompany,
-    assignCompanyRider
+    toggleUserOnlineStatus
 }

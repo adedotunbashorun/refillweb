@@ -36,7 +36,6 @@
                                   <option value="admin">Admin</option>
                                   <option value="vendor">Vendor</option>
                                   <option value="client">Client</option>
-                                  <option value="rider">Rider</option>
                               </select>
                           </div>
                           <div class="form-group">
@@ -53,29 +52,6 @@
 
                           <div class="form-group">
                               <input type="text" v-model="user.email" class="form-control" id="inputEmail" placeholder="Email" value="">
-                          </div>
-
-                          <div v-if="user.user_type === 'vendor'">
-                            <div class="form-group">
-                                <input type="text" v-model="company.name" class="form-control" id="inputEmail" placeholder="Company Name" value="" required>
-                            </div>
-
-                            <div class="form-group">
-                                  <input type="file" class="form-control" @change="onFileChanges">
-                              </div>
-
-                            <div class="form-group">
-                                <input type="text" v-model="company.phone" pattern="^\+[1-9]\d{1,14}$" class="form-control" placeholder="Phone Number" value="" required>
-                                <span class="note">Format: +2349034268873</span>
-                            </div>
-
-                            <div class="form-group">
-                                <input type="text" v-model="company.email" class="form-control" id="inputEmail" placeholder="Email" value="" required>
-                            </div>
-
-                            <div class="form-group">
-                              <textarea type="text" v-model="company.address" class="form-control" id="inputAddress" rows="4" required>Address</textarea>
-                            </div>
                           </div>
 
                           <div class="form-group">
@@ -120,27 +96,16 @@ export default {
                 last_name:'',
                 email:'',
                 phone:'',
-                password:'',
-            },
-            company: {
-              name: '',
-              email: '',
-              phone: '',
-              address: '',
-              image: ''
+                password:''
             },
             success: '',
             error: ''
         }
     },
-    mounted(){
-      $('#vendor').hide()
-    },
     methods: {
         register(){
             let component = this;
-            component.user.company = component.company
-            this.$store.dispatch('addUser', component.user)
+            this.$store.dispatch('addUser', [component.user,this.$store.state.auth.headers])
             .then((resp) => {
                 this.error = ''
                 this.success = ''
@@ -158,14 +123,7 @@ export default {
                       last_name:'',
                       email:'',
                       phone:'',
-                      password:'',
-                      company: {
-                        name: '',
-                        email: '',
-                        phone: '',
-                        address: '',
-                        image: ''
-                      }
+                      password:''
                   }
                   this.errors = []
                 }
@@ -221,23 +179,7 @@ export default {
         validEmail: function (email) {
             var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
             return re.test(email);
-        },
-        onFileChanges(e) {
-            var files = e.target.files || e.dataTransfer.files;
-            if (!files.length)
-              return;
-            this.createImages(files[0]);
-        },
-        createImages(file) {
-          var image = new Image();
-          var reader = new FileReader();
-          var vm = this;
-
-          reader.onload = (e) => {
-            vm.user.company.image = e.target.result;
-          };
-          reader.readAsDataURL(file);
-        },
+        }
     }
 }
 </script>

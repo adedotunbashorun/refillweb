@@ -6,9 +6,9 @@ import {
   SETTINGS_BY_ID_SUCCESS,
   UPDATE_SETTINGS,
   UPDATE_SETTINGS_SUCCESS,
-  REMOVE_SETTINGS,
-  REMOVE_SETTINGS_SUCCESS,
-  REMOVE_SETTINGS_FAILURE,
+  ALL_DATA,
+  ALL_DATA_SUCCESS,
+  ALL_DATA_FAILURE,
   ALL_SETTINGS,
   ALL_SETTINGS_SUCCESS,
   ERROR_MSG,
@@ -47,7 +47,7 @@ export const mutations = {
   },
   [ADD_SETTINGS_SUCCESS]: (state, payload) => {
     state.showLoader = false
-    state.settings.push(payload)
+    state.settings = payload.settings
   },
   [ADD_SETTINGS_FAILURE]: (state, payload) => {
     state.showLoader = false
@@ -61,6 +61,17 @@ export const mutations = {
     state.settings = payload.settings
   },
   [UPDATE_SETTINGS_FAILURE]: (state, payload) => {
+    state.showLoader = false
+    state.error = payload
+  },
+  [ALL_DATA]: (state) => {
+    state.showLoader = true
+  },
+  [ALL_DATA_SUCCESS]: (state, payload) => {
+    state.showLoader = false
+    state.data = payload
+  },
+  [ALL_DATA_FAILURE]: (state, payload) => {
     state.showLoader = false
     state.error = payload
   },

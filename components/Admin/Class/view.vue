@@ -10,7 +10,7 @@
               <span class="text-uppercase panel-subtitle">Fill form to update class</span>
           </div>
           <div class="panel-body">
-            <form @submit.prevent="checkForm">
+            <form @submit.prevent="checkForm" v-if="data">
                     <p v-if="errors.length">
                         <b>Please correct the following error(s):</b>
                         <ul>

@@ -6,14 +6,12 @@
         <ul class="dropdown-menu" role="menu">
             <li v-for="notification in notifications" :key="notification">
                 new user register
-                <small><a href="#" v-on:click="MarkAsRead(notification)">{{ notification.data.user.name }}</a></small>
+                <small><a href="#" @click="MarkAsRead(notification)">{{ notification.data.user.name }}</a></small>
             </li>
-
         </ul>
     </li>
 </template>
-
-<script>
+<script type="text/javascript">
     export default {
         props: ['notifications'],
         methods: {
@@ -26,7 +24,5 @@
                 });
             }
         }
-
-
     }
 </script>

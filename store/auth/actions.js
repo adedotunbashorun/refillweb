@@ -57,6 +57,19 @@ export const actions = {
     })
   },
 
+  toggleUserOnlineStatus({ commit }, [data,header]) {
+    commit(APPROVE_USERS)
+    return new Promise((resolve, reject) => {
+      Api.User.toggleUserOnlineStatus(data,header).then( response => {
+        commit(APPROVE_USERS_SUCCESS,response.data)
+        resolve(response)
+      }).catch(err => {
+        commit(APPROVE_USERS_FAILURE, err)
+        reject(err)
+      })
+    })
+  },
+
   activateUser({ commit }, data) {
     commit(APPROVE_USERS)
     return new Promise((resolve, reject) => {
@@ -105,50 +118,10 @@ export const actions = {
       })
     })
   },
-
-  getUserCompany({ commit }, [payload,header]) {
-    commit(USER_BY_ID)
-    return new Promise((resolve, reject) => {
-      Api.User.getUserCompany(payload, header).then(response => {
-        // commit(USER_BY_ID_SUCCESS, response.data)
-        resolve(response)
-      }).catch(err => {
-        commit(USER_BY_ID_FAILURE, err)
-        reject(err)
-      })
-    })
-  },
-
-  getUnassignRider({ commit }, header) {
-    commit(USER_BY_ID)
-    return new Promise((resolve, reject) => {
-      Api.User.getUnassignRider(header).then(response => {
-        // commit(USER_BY_ID_SUCCESS, response.data)
-        resolve(response)
-      }).catch(err => {
-        commit(USER_BY_ID_FAILURE, err)
-        reject(err)
-      })
-    })
-  },
-
-  assignCompanyRider({ commit }, [data,header]) {
-    commit(USER_BY_ID)
-    return new Promise((resolve, reject) => {
-      Api.User.assignCompanyRider(data,header).then(response => {
-        // commit(USER_BY_ID_SUCCESS, response.data)
-        resolve(response)
-      }).catch(err => {
-        commit(USER_BY_ID_FAILURE, err)
-        reject(err)
-      })
-    })
-  },
-
-  addUser ({commit}, payload) {
+  addUser ({commit}, [payload,header]) {
     commit(ADD_USER)
     return new Promise((resolve, reject) => {
-      Api.User.register(payload).then(response => {
+      Api.User.register(payload,header).then(response => {
         commit(ADD_USER_SUCCESS, response.data)
         resolve(response)
       }).catch(err => {

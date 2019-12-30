@@ -1,9 +1,9 @@
 
 export const getters = {
-  allQuestions: (state ) => {
+  allSubCategories: (state ) => {
     return state.service_categories
   },
-  Question: (state) => {
+  SubCategory: (state) => {
     return state.service_category
   },
 

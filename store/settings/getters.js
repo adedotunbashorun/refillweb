@@ -6,6 +6,9 @@ export const getters = {
   settings: (state) => {
     return state.settings
   },
+  data: () => {
+    return state.data
+  }
 
 }
 

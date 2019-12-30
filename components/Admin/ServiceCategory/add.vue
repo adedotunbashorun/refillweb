@@ -22,7 +22,7 @@
                 <div class="form-group">
                     <select class="form-control" v-model="service_cat.category_id">
                         <option value="">-- Select Category --</option>
-                        <option v-for="category in categories" :value="category._id">{{ category.name}}</option>
+                        <option v-for="category in categories" :key="category._id" :value="category._id">{{ category.name}}</option>
                     </select>
                 </div>
                 <div class="form-group">
@@ -81,7 +81,7 @@ export default {
     methods: {
         register(){
             let component = this;
-            this.$store.dispatch('addQuestion', [component.service_cat,this.$store.state.auth.headers])
+            this.$store.dispatch('addSubCategory', [component.service_cat,this.$store.state.auth.headers])
             .then((resp) => {
               this.error = ''
               this.success = ''

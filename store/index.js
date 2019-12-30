@@ -7,6 +7,7 @@ import classes from './class'
 import settings from './settings'
 import supports from './supports'
 import service_category from './service_category'
+import orders from './orders'
 
 const store = () => {
   return new Vuex.Store({
@@ -17,7 +18,8 @@ const store = () => {
       service_category,
       classes,
       settings,
-      supports
+      supports,
+      orders
     }
 
   })

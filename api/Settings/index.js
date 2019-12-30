@@ -74,11 +74,24 @@ const updateSettings = (data, header) => {
     })
 }
 
+const allCount = (header) => {
+  return new Promise((resolve, reject) => {
+      axios.get(config.apiUrl + '/api/all/count', { headers: { Authorization: header } })
+          .then(resp => {
+              resolve(resp)
+          })
+          .catch(err => {
+              reject(err)
+          })
+  })
+}
+
 export const Settings = {
     allSettings,
     settingsById,
     addSettings,
     updateSettings,
     allNotifications,
-    markAsRead
+    markAsRead,
+    allCount
 }

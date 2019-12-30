@@ -22,7 +22,7 @@
                     <div class="form-group">
                         <select class="form-control" v-model="service_cat.category_id">
                             <option value="">-- Select Service --</option>
-                            <option v-for="category in categories" :value="category._id">{{ category.name}}</option>
+                            <option v-for="category in categories" :key="category._id" :value="category._id">{{ category.name}}</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -87,14 +87,14 @@ export default {
   },
   methods: {
     getServiceCat(){
-        this.$store.dispatch('questionById', [this.$nuxt._route.params.id,this.$store.state.auth.headers])
+        this.$store.dispatch('subCategoryById', [this.$nuxt._route.params.id,this.$store.state.auth.headers])
         .then((resp) => {
             return this.service_cat = resp.data.subcategory
         }).catch(err => console.log())
     },
     update(){
         let component = this;
-        this.$store.dispatch('updateQuestion', [component.service_cat,this.$store.state.auth.headers])
+        this.$store.dispatch('updateSubCategory', [component.service_cat,this.$store.state.auth.headers])
         .then((resp) => {
           this.error = ''
           this.success = ''

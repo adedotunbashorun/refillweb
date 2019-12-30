@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {config} from '../../config'
 
-const allQuestions = (header) => {
+const allSubCategories = (header) => {
     return new Promise((resolve, reject) => {
         axios.get(config.apiUrl + '/api/subcategories', { headers: { Authorization: header } })
             .then(resp => {
@@ -13,7 +13,7 @@ const allQuestions = (header) => {
     })
 }
 
-const questionById = (data, header) => {
+const SubCategoryById = (data, header) => {
     return new Promise((resolve, reject) => {
         axios.get(config.apiUrl + '/api/subcategory/'+data, {headers:{ Authorization: header}})
             .then(resp => {
@@ -25,7 +25,7 @@ const questionById = (data, header) => {
     })
 }
 
-const addQuestion = (data, header) => {
+const addSubCategory = (data, header) => {
     return new Promise((resolve, reject) => {
         axios.post(config.apiUrl + '/api/subcategory', data, { headers: { Authorization: header } })
             .then(resp => {
@@ -37,7 +37,7 @@ const addQuestion = (data, header) => {
     })
 }
 
-const updateQuestion = (data, header) => {
+const updateSubCategory = (data, header) => {
     return new Promise((resolve, reject) => {
         axios.patch(config.apiUrl + '/api/subcategory/' + data._id, data, { headers: { Authorization: header } })
             .then(resp => {
@@ -49,7 +49,7 @@ const updateQuestion = (data, header) => {
     })
 }
 
-const deleteQuestion = (data, header) => {
+const deleteSubCategory = (data, header) => {
     return new Promise((resolve, reject) => {
         axios.delete(config.apiUrl + '/api/subcategory/' + data, { headers: { Authorization: header } })
             .then(resp => {
@@ -61,10 +61,10 @@ const deleteQuestion = (data, header) => {
     })
 }
 
-export const Question = {
-    allQuestions,
-    questionById,
-    addQuestion,
-    deleteQuestion,
-    updateQuestion
+export const SubCategory = {
+    allSubCategories,
+    SubCategoryById,
+    addSubCategory,
+    deleteSubCategory,
+    updateSubCategory
 }

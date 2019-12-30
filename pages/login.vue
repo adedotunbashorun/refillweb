@@ -2,11 +2,10 @@
   <Login />
 </template>
 <script>
-import Login from '~/components/FrontEnd/Login.vue'
   export default {
     layout: 'login',
     components:{
-      Login
+      Login: () => import('@/components/FrontEnd/Login.vue')
     }
   }
 </script>

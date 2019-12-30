@@ -1,8 +1,7 @@
 <template>
-    <QuestionView :categories="categories" :page="page" />
+    <SubCategoryView :categories="categories" :page="page" />
 </template>
 <script>
-import QuestionView from '~/components/Admin/ServiceCategory/view.vue'
 export default {
     layout: 'admin',
     data(){
@@ -11,7 +10,7 @@ export default {
         }
     },
     components:{
-        QuestionView
+        SubCategoryView : () => import('~/components/Admin/ServiceCategory/view.vue')
     },
     mounted(){
         this.allCategories()

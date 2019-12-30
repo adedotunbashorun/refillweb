@@ -8,6 +8,7 @@ export default {
   state: {
     error: '',
     settings: {},
+    data: {},
     showLoader: false,
   },
   mutations,

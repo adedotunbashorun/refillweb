@@ -46,7 +46,7 @@
                         <label class="form-control-label" for="input-type">Priority</label>
                         <select  type="text" id="input-type" class="form-control form-control-alternative" v-model="support.dispute_priority_id">
                           <option value="">Select Priority</option>
-                          <option v-for="(priority) in priorities" :value="priority._id">{{ priority.name }}</option>
+                          <option v-for="priority in priorities" :key="priority._id" :value="priority._id">{{ priority.name }}</option>
                         </select>
                       </div>
                     </div>
