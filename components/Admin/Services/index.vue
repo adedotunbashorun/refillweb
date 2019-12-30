@@ -1,0 +1,80 @@
+<template>
+  <div>
+    <h3 class="page-title">{{ page }}</h3>
+    <div class="row">
+      <div class="col-md-12">
+        <!-- TABLE NO PADDING -->
+        <div class="panel">
+          <div class="panel-heading">
+            <h3 class="panel-title">Service List
+              <nuxt-link to="/admin/service/create" class="pull pull-right btn btn-outline-primary">
+              Create Service</nuxt-link>
+            </h3>
+            <hr/>
+          </div>
+          <div class="panel-body no-padding">
+            <table id="category-table" class="table">
+                    <thead class="bg-light">
+                    <tr>
+                        <th>#</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Action </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="(category, index) in categories" :key="index">
+                            <td>{{ index + 1}}</td>
+                            <td><img :src="apiUrl+'/'+category.image_url" style="width:30px;height:30px" /></td>
+                            <td>{{ category.name}}</td>
+                            <td>{{category.description}}</td>
+                            <td>
+                              <div class="dropdown">
+                                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Action
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                  <nuxt-link class="" :to="{name: 'admin-service-id', params:{id : category._id}}" title="edit / view">
+                                  <i class="material-icons">edit</i></nuxt-link>
+                                  <div class="dropdown-divider"></div>
+                                  <a class="text-danger" style="cursor:pointer;" @click="deleteCategory(category._id)" title="delete">
+                                  <i class="material-icons text-danger">delete</i></a>
+                                </div>
+                              </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+          </div>
+        </div>
+        <!-- END TABLE NO PADDING -->
+
+      </div>
+    </div>
+  </div>
+</template>
+<script>
+import {config} from '../../../config'
+export default {
+    props:['categories','page'],
+    data(){
+        return {
+            apiUrl : ''
+        }
+    },
+    mounted(){
+        this.apiUrl = config.apiUrl
+        setTimeout(() => {
+            $('#category-table').DataTable({})
+        },2000)
+    },
+    methods:{
+        deleteCategory(id){
+            this.$store.dispatch('removeCategory', [id,this.$store.state.auth.headers])
+            .then((resp) => {
+            }).catch(err => console.log())
+        }
+    }
+}
+</script>

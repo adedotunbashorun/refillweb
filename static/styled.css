@@ -1,0 +1,19 @@
+.m-auto {
+	margin-top: 50px !important;
+}
+
+.d-table {
+    margin: auto !important;
+}
+
+.accntname {
+	margin-bottom: 10px;
+}
+
+.bg-serveme{
+  background-color: #8DCC3F !important;
+}
+
+a.bg-dark:focus, a.bg-dark:hover {
+  background-color: #1d2124 !important;
+}
