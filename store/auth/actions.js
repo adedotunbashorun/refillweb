@@ -1,3 +1,4 @@
+
 import { Api } from '../../api'
 const cookieparser = process.server ? require('cookieparser') : undefined
 
@@ -118,10 +119,50 @@ export const actions = {
       })
     })
   },
-  addUser ({commit}, [payload,header]) {
+
+  getUserCompany({ commit }, [payload,header]) {
+    commit(USER_BY_ID)
+    return new Promise((resolve, reject) => {
+      Api.User.getUserCompany(payload, header).then(response => {
+        // commit(USER_BY_ID_SUCCESS, response.data)
+        resolve(response)
+      }).catch(err => {
+        commit(USER_BY_ID_FAILURE, err)
+        reject(err)
+      })
+    })
+  },
+
+  getUnassignRider({ commit }, header) {
+    commit(USER_BY_ID)
+    return new Promise((resolve, reject) => {
+      Api.User.getUnassignRider(header).then(response => {
+        // commit(USER_BY_ID_SUCCESS, response.data)
+        resolve(response)
+      }).catch(err => {
+        commit(USER_BY_ID_FAILURE, err)
+        reject(err)
+      })
+    })
+  },
+
+  assignCompanyRider({ commit }, [data,header]) {
+    commit(USER_BY_ID)
+    return new Promise((resolve, reject) => {
+      Api.User.assignCompanyRider(data,header).then(response => {
+        // commit(USER_BY_ID_SUCCESS, response.data)
+        resolve(response)
+      }).catch(err => {
+        commit(USER_BY_ID_FAILURE, err)
+        reject(err)
+      })
+    })
+  },
+
+  addUser ({commit}, payload) {
     commit(ADD_USER)
     return new Promise((resolve, reject) => {
-      Api.User.register(payload,header).then(response => {
+      Api.User.register(payload).then(response => {
         commit(ADD_USER_SUCCESS, response.data)
         resolve(response)
       }).catch(err => {

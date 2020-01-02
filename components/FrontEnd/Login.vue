@@ -5,7 +5,7 @@
 			<div class="wrap-login100" id="login">
 				<form class="login100-form validate-form" @submit.prevent="checkForm">
 					<!-- <span class="login100-form-title p-b-43"> -->
-						<center><img src="images/servme-logo-dark.png" style="height:100px;width:100px;text-align:center;" /></center>
+						<center><img src="images/refill_logo.png" style="height:100px;width:100px;text-align:center;" /></center>
 					<!-- </span> -->
           <p v-if="errors.length">
             <b>Please correct the following error(s):</b>

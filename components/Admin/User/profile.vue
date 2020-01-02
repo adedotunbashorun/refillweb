@@ -18,8 +18,18 @@
             <div class="profile-main">
               <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
               <h3 class="name">{{ user_details.first_name +' ' + user_details.last_name}}</h3>
-              <span class="online-status status-available" v-if="user_details.online_status == 'true'">Available</span>
-              <span class="offline-status status-available" v-else>Not Available</span>
+              <span
+                class="online-status status-available"
+                v-if="user_details.online_status === true"
+                @click="toggleUserOnlineStatus()"
+                >Available</span
+              >
+              <span
+                class="offline-status status-available"
+                v-else
+                @click="toggleUserOnlineStatus()"
+                >Not Available</span
+              >
             </div>
             <div class="profile-stat">
               <div class="row">
@@ -421,6 +431,20 @@ export default {
             this.riders = resp.data.riders
         }).catch(err => console.log())
     },
+    toggleUserOnlineStatus() {
+      this.$store
+        .dispatch("toggleUserOnlineStatus", [
+          this.$nuxt._route.params.id
+            ? this.$nuxt._route.params.id
+            : this.$store.getters.authUser._id,
+          this.$store.state.auth.headers
+        ])
+        .then(resp => {
+          toastr.success(resp.data.msg);
+          this.user_details = resp.data.user;
+        })
+        .catch(err => console.log());
+    },
     getUser(){
         this.$store.dispatch('userById', [(this.$nuxt._route.params.id) ? this.$nuxt._route.params.id : this.$store.getters.authUser._id,this.$store.state.auth.headers])
         .then((resp) => {
@@ -453,6 +477,7 @@ export default {
             toastr.success(resp.data.msg)
             this.success = resp.data.msg
             this.errors = []
+            this.getUserCompany();
           }
         })
         .catch(err => {
