@@ -93,10 +93,23 @@ export default {
             // if we're on the home page, show an "Updated" badge
             var notification = new Notification(user.first_name + " "+ user.last_name,{
                 body: message.msg, // content for the alert
-                icon: '/images/servme-logo-dark.png'
+                icon: '/images/refill_logo.png'
             });
             notification.onclick = function (event) {
-                window.location.href = 'admin/users/' + user._id;
+                window.location.href = '/users/' + user._id;
+                event.preventDefault();
+                notification.close();
+            }
+            this.allNotifications()
+        })
+        .bind('orders', function ({order, message}) {
+            // if we're on the home page, show an "Updated" badge
+            var notification = new Notification('new order',{
+                body: message.msg, // content for the alert
+                icon: '/images/refill_logo.png'
+            });
+            notification.onclick = function (event) {
+                window.location.href = '/order/' + order._id;
                 event.preventDefault();
                 notification.close();
             }
@@ -106,7 +119,7 @@ export default {
             // if we're on the home page, show an "Updated" badge
             var notification = new Notification(settings.data.app_name ,{
                 body: message.msg, // content for the alert
-                icon: '/images/servme-logo-dark.png'
+                icon: '/images/refill_logo.png'
             });
             notification.onclick = function (event) {
                 window.location.href = 'admin/users/' + user._id;
