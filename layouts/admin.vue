@@ -70,6 +70,7 @@ export default {
     created: () => {
       this.notifications
     },
+
     mounted: () => {
       if(this.user.user_type !== 'admin'){
         this.$router.push('/login')
