@@ -198,7 +198,7 @@
                               </div>
 
                               <div class="form-group">
-                                <textarea type="text" v-model="company.address" class="form-control" rows="4" required>Company Address</textarea>
+                                <textarea type="text" v-model="company.address" class="form-control" rows="4" required placeholder="address"></textarea>
                               </div>
                             </div>
                             <div class="form-group">
