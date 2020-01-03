@@ -56,7 +56,7 @@
                           </div>
 
                           <div class="form-group">
-                              <textarea type="text" v-model="user.address" class="form-control" id="inputAddress" rows="4">Address</textarea>
+                              <textarea type="text" v-model="user.address" class="form-control" id="inputAddress" rows="4" placeholder="Enter Address"></textarea>
                           </div>
 
                           <div class="form-group">

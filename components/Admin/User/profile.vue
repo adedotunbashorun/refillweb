@@ -174,7 +174,7 @@
                                 <input type="text" v-model="user_details.email" class="form-control" id="inputAddress" placeholder="Email" value="">
                             </div>
                             <div class="form-group">
-                                <textarea type="text" v-model="user_details.address" placeholder="Address" class="form-control" id="inputAddress" rows="4"></textarea>
+                                <textarea type="text" v-model="user_details.address" placeholder="enter individual Address" class="form-control" id="inputAddress" rows="4"></textarea>
                             </div>
                             <div class="form-group">
                                 <textarea type="text" v-model="user_details.brief" placeholder="brief details about yourself" class="form-control" id="inputAddress" rows="4"></textarea>
@@ -198,7 +198,7 @@
                               </div>
 
                               <div class="form-group">
-                                <textarea type="text" v-model="company.address" class="form-control" rows="4" required placeholder="address"></textarea>
+                                <textarea type="text" v-model="company.address" class="form-control" rows="4" required placeholder="enter company address"></textarea>
                               </div>
                             </div>
                             <div class="form-group">

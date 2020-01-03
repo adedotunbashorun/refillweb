@@ -67,7 +67,7 @@ export default {
           return this.$store.getters.allSettings
         }
     },
-    mounted: () => {
+    mounted(){
       if(this.user.user_type !== 'admin'){
         this.$router.push('/login')
       }
@@ -94,7 +94,7 @@ export default {
                 icon: '/images/refill_logo.png'
             });
             notification.onclick = function (event) {
-                window.location.href = '/users/' + user._id;
+                window.location.href = 'admin/users/' + user._id;
                 event.preventDefault();
                 notification.close();
             }

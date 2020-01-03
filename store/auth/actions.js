@@ -159,10 +159,10 @@ export const actions = {
     })
   },
 
-  addUser ({commit}, payload) {
+  addUser ({commit}, [payload, header]) {
     commit(ADD_USER)
     return new Promise((resolve, reject) => {
-      Api.User.register(payload).then(response => {
+      Api.User.register(payload, header).then(response => {
         commit(ADD_USER_SUCCESS, response.data)
         resolve(response)
       }).catch(err => {
