@@ -68,13 +68,13 @@ export default {
         }
     },
     created: () => {
-      this.listenPusher(),
       this.allNotifications()
     },
     mounted: () => {
       if(this.user.user_type !== 'admin'){
         this.$router.push('/login')
       }
+      this.listenPusher()
     },
     methods:{
       listenPusher(){
