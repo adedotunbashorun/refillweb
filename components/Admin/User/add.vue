@@ -35,6 +35,7 @@
                                   <option value="">-- User Type--</option>
                                   <option value="admin">Admin</option>
                                   <option value="vendor">Vendor</option>
+                                  <option value="rider">Rider</option>
                                   <option value="client">Client</option>
                               </select>
                           </div>

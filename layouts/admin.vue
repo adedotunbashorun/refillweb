@@ -67,12 +67,14 @@ export default {
           return this.$store.getters.allSettings
         }
     },
-    mounted(){
+    created: () => {
+      this.listenPusher(),
+      this.allNotifications()
+    },
+    mounted: () => {
       if(this.user.user_type !== 'admin'){
         this.$router.push('/login')
       }
-      this.listenPusher()
-      this.allNotifications()
     },
     methods:{
       listenPusher(){
