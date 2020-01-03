@@ -67,10 +67,6 @@ export default {
           return this.$store.getters.allSettings
         }
     },
-    created: () => {
-      this.notifications
-    },
-
     mounted: () => {
       if(this.user.user_type !== 'admin'){
         this.$router.push('/login')
