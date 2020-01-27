@@ -4,9 +4,7 @@
 
 			<div class="wrap-login100" id="login">
 				<form class="login100-form validate-form" @submit.prevent="checkForm">
-					<!-- <span class="login100-form-title p-b-43"> -->
-						<center><img src="images/refill_logo.png" style="height:100px;width:100px;text-align:center;" /></center>
-					<!-- </span> -->
+					<center style="margin-bottom: 20px;"><img src="images/refill_icon.png" style="height:100px;width:100px;text-align:center;" /></center>
           <p v-if="errors.length">
             <b>Please correct the following error(s):</b>
             <ul>
@@ -48,7 +46,10 @@
 					</div>
 				</form>
 
-				<div class="login100-more" style="background-image: url('images/bg_img.png');">
+				<div class="login100-more">
+          <div class="">
+            <h2 style="margin-top: 100px; margin-left: 30px;color: #fefefe;">Welcome Back!</h2>
+          </div>
 				</div>
 			</div>
       <div class="wrap-login100" id="forget_password">
@@ -76,19 +77,21 @@
           </div>
 					<div class="container-login100-form-btn">
 						<button type="submit" class="login100-form-btn">
-							<i class="loader" v-if="isLoading"></i> Password
+							<i class="loader" v-if="isLoading"></i>Send Password Reset Link
 						</button>
 					</div>
 				</form>
 
-				<div class="login100-more" style="background-image: url('images/bg_img.png');">
+				<div class="login100-more">
+          <div class="">
+            <h2 style="margin-top: 100px; margin-left: 30px;color: #fefefe;">Password Reset!</h2>
+          </div>
 				</div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
-  // import 'vue-loading-overlay/dist/vue-loading.css';
   const Cookie = process.client ? require('js-cookie') : undefined
   export default {
     data(){

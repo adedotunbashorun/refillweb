@@ -6,7 +6,7 @@
         <div class="col-md-12 col-lg-4">
           <div class="footer-logo">
 
-            <a class="navbar-brand" href="#">ServeMe</a>
+            <a class="navbar-brand" href="#">Refill</a>
             <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the.</p>
 
           </div>
@@ -77,10 +77,7 @@
 
     <div class="copyrights">
       <div class="container">
-        <p>&copy; Copyrights ServeMe. All rights reserved.</p>
-        <!-- <div class="credits">
-          Designed by <a href="#">ServeMe</a>
-        </div> -->
+        <p>&copy; Copyrights Refill. All rights reserved.</p>
       </div>
     </div>
 

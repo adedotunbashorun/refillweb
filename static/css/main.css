@@ -236,6 +236,7 @@ iframe {
   background-position: center;
   position: relative;
   z-index: 1;
+  background-color: #4285f4;
 }
 
 .login100-more::before {
@@ -247,7 +248,7 @@ iframe {
   height: 100%;
   top: 0;
   left: 0;
-  background: rgba(0,0,0,0.1);
+  background: #4285f4;
 }
 
 
@@ -478,7 +479,7 @@ input.input100 {
   width: 100%;
   height: 50px;
   border-radius: 10px;
-  background: #8DCC3F;
+  background: #4285f4;
 
   font-family: Montserrat-Bold;
   font-size: 12px;
