@@ -8,17 +8,6 @@
           <div class="panel-heading">
             <h3 class="panel-title">Orders List</h3>
             <div class="col-lg-3  pull pull-right">
-              <!-- <select
-                @change="orderByType($event)"
-                class="form-control"
-                v-model="type"
-              >
-                <option value="All">All orders</option>
-                <option value="waiting">All waiting orders</option>
-                <option value="accepted">All accepted orders</option>
-                <option value="started">All started orders</option>
-                <option value="completed">All completed orders</option>
-              </select> -->
             </div>
             <hr />
           </div>
@@ -49,6 +38,17 @@
                       props.row.vendor_id.last_name
                   }}
                 </span>
+                <span v-else-if="props.column.field == 'address'">
+                  {{ props.row.client_landmark }}
+                </span>
+                <span v-else-if="props.column.field == 'total_amount'">
+                  ₦{{ parseFloat(props.row.total_amount) }}
+                </span>
+                <span v-else-if="props.column.field == 'payment_option'">
+                  <span class="label label-info" v-if="parseInt(props.row.payment_option) === 1">Paid Online</span>
+                  <span class="label label-info" v-else-if="parseInt(props.row.payment_option) === 2">Cash On Delivery</span>
+                  <span class="label label-info" v-else-if="parseInt(props.row.payment_option) === 3">Pos On Delivery</span>
+                </span>
                 <span v-else-if="props.column.field == 'action'">
                   <nuxt-link
                     class="btn btn-info dropdown-item"
@@ -58,10 +58,20 @@
                     }"
                     title="edit / view"
                   >
-                    <i class="fa fa-edit">
-                      <!-- edit -->
+                    <i class="fa fa-eye">
                     </i></nuxt-link
                   >
+                </span>
+                <span v-if="props.column.field == 'status'">
+                  <button class="btn btn-success" v-if="props.row.status === 'completed'">
+                      <i class="fa fa-check"></i> {{ props.row.status }}
+                  </button>
+                  <button class="btn btn-danger" v-else-if="props.row.status === 'failed'">
+                      <i class="fa fa-times"></i> {{ props.row.status }}
+                  </button>
+                  <button class="btn btn-info" v-else>
+                      <i class="fa fa-clock"></i> {{ props.row.status }}
+                  </button>
                 </span>
               </template>
             </vue-good-table>
@@ -86,10 +96,10 @@ export default {
         { label: "#", field: "num", sortable: false },
         { label: "Name", field: "name", sortable: false },
         { label: "Vendor", field: "vendor", sortable: false },
-        { label: "Service Category", field: "service_category_id.name", sortable: false },
-        { label: "Payment Type", field: "payment_type", sortable: false },
-        { label: "Status", field: "status", sortable: false },
+        { label: "Payment Type", field: "payment_option", sortable: false },
+        { label: "Amount", field: "total_amount", sortable: false },
         { label: "Address", field: "address", sortable: false },
+        { label: "Status", field: "status", sortable: false },
         { label: "Action", field: "action", sortable: false }
       ]
     };

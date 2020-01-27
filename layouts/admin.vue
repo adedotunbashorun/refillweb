@@ -76,7 +76,7 @@ export default {
     },
     methods:{
       listenPusher(){
-        var pusher = new Pusher('0ae5e86d26057ddb2eb4', { cluster: 'eu' });
+        var pusher = new Pusher('334bfb1fc2ed027d88e7', { cluster: 'eu', forceTLS: true });
 
         // retrieve the socket ID once we're connected
         pusher.connection.bind('connected', function () {

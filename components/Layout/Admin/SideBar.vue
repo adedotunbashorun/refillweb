@@ -9,7 +9,7 @@
 
               <li><nuxt-link to="/admin/users" class=""><i class="fa fa-users"></i> <span>Users</span></nuxt-link></li>
 
-							<!-- <li><nuxt-link to="/admin/service" class=""><i class="lnr lnr-code"></i> <span>Service</span></nuxt-link></li> -->
+							<li><nuxt-link to="/admin/company" class=""><i class="lnr lnr-code"></i> <span>Companies</span></nuxt-link></li>
 
 							<!-- <li><nuxt-link to="/admin/service_category" class=""><i class="lnr lnr-chart-bars"></i> <span>Service Category</span></nuxt-link></li> -->
 

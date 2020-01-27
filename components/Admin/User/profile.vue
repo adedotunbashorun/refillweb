@@ -10,38 +10,34 @@
     </h3>
     <div class="panel panel-profile">
       <div class="clearfix">
-        <!-- LEFT COLUMN -->
         <div class="profile-left">
-          <!-- PROFILE HEADER -->
           <div class="profile-header">
             <div class="overlay"></div>
             <div class="profile-main">
-              <img src="assets/img/user-medium.png" class="img-circle" alt="Avatar">
-              <h3 class="name">{{ user_details.first_name +' ' + user_details.last_name}}</h3>
-              <span
-                class="online-status status-available"
+              <img :src="user_details.cloud_image_url" class="img-circle" alt="Avatar" width="100" height="100">
+              <h3 class="name">{{ capitalize(user_details.first_name) +' ' + capitalize(user_details.last_name)}}</h3>
+              <button
+                class="online-status status-available btn-success"
                 v-if="user_details.online_status === true"
                 @click="toggleUserOnlineStatus()"
-                >Available</span
-              >
-              <span
-                class="offline-status status-available"
+                >Available</button>
+              <button
+                class="offline-status status-available btn-warning"
                 v-else
                 @click="toggleUserOnlineStatus()"
-                >Not Available</span
-              >
+                >Not Available</button>
             </div>
             <div class="profile-stat">
               <div class="row">
                 <div class="col-md-4 stat-item" v-if="orders">
                   {{ orders.length }} <span>Orders</span>
                 </div>
-                <!-- <div class="col-md-4 stat-item">
-                  15 <span>Completed</span>
+                <div class="col-md-4 stat-item completed">
+                   <span>{{ OrderStatus(orders, 'completed') }}</span>
                 </div>
-                <div class="col-md-4 stat-item">
-                  2174 <span>Average Rating</span>
-                </div> -->
+                <div class="col-md-4 stat-item uncompleted">
+                  <span>{{ OrderStatus(orders, 'uncompleted') }}</span>
+                </div>
               </div>
             </div>
           </div>
@@ -74,13 +70,8 @@
               >
             </div>
           </div>
-          <!-- END PROFILE DETAIL -->
         </div>
-        <!-- END LEFT COLUMN -->
-
-        <!-- RIGHT COLUMN -->
         <div class="profile-right">
-          <!-- TABBED CONTENT -->
           <div class="custom-tabs-line tabs-line-bottom left-aligned">
             <ul class="nav" role="tablist">
               <li class="active">
@@ -100,6 +91,7 @@
                 >
               </li>
               <li><a href="#tab-bottom-left5" role="tab" data-toggle="tab" v-if="orders.length > 0">Orders</a></li>
+              <li><a href="#tab-bottom-left6" role="tab" data-toggle="tab" v-if="companies.length > 0">Companies</a></li>
             </ul>
           </div>
           <div class="tab-content">
@@ -178,28 +170,6 @@
                             </div>
                             <div class="form-group">
                                 <textarea type="text" v-model="user_details.brief" placeholder="brief details about yourself" class="form-control" id="inputAddress" rows="4"></textarea>
-                            </div>
-                            <div id="vendor" v-if="user_details.user_type === 'vendor'">
-                              <div class="form-group">
-                                  <input type="text" v-model="company.name" class="form-control" placeholder="Company Name" required>
-                              </div>
-
-                              <div class="form-group">
-                                  <input type="file" class="form-control" @change="onFileChanges">
-                              </div>
-
-                              <div class="form-group">
-                                  <input type="text" v-model="company.phone" pattern="^\+[1-9]\d{1,14}$" class="form-control" placeholder="Company Phone Number" required>
-                                  <span class="note">Format: +2349034268873</span>
-                              </div>
-
-                              <div class="form-group">
-                                  <input type="text" v-model="company.email" class="form-control" placeholder="Company Email" required>
-                              </div>
-
-                              <div class="form-group">
-                                <textarea type="text" v-model="company.address" class="form-control" rows="4" required placeholder="enter company address"></textarea>
-                              </div>
                             </div>
                             <div class="form-group">
                                 <button type="submit" class="mb-2 btn btn-primary mr-2">Update User</button>
@@ -284,47 +254,112 @@
               >
             </div>
             <div class="tab-pane fade" id="tab-bottom-left5">
-              <div class="table-responsive" v-if="orders">
-                <table id="activity-table" class="table project-table">
-                  <thead>
-                      <tr>
-                        <th>S/N</th>
-                        <th>Reference</th>
-                        <th>Type</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Action</th>
-                      </tr>
-                  </thead>
-                  <tbody>
-                      <tr v-for="(order,index) in orders" :key="index">
-                        <th scope="row">
-                            {{ index+1 }}
-                        </th>
-                        <td>
-                            {{ order.reference }}
-                        </td>
-                        <td>
-                            {{ order.kg+' '+ order.cylinder_size }}
-                        </td>
-                        <td>
-                            {{ order.total_amount }}
-                        </td>
-                        <td>
-                          <span class="label label-info"> {{ order.status }}</span>
-                        </td>
-                        <td>
+              <vue-good-table
+                :rows="orders"
+                :columns="order_columns"
+                :pagination-options="{
+                  enabled: true,
+                  perPage: 5
+                }"
+              >
+                <template slot="table-row" slot-scope="props">
+                  <span v-if="props.column.field == 'num'">
+                    {{ props.row.originalIndex + 1 }}
+                  </span>
+                  <span v-else-if="props.column.field == 'phone'">
+                    {{ props.row.client_phone }}
+                  </span>
+                  <span v-else-if="props.column.field == 'total_amount'">
+                    ₦{{ parseFloat(props.row.total_amount) }}
+                  </span>
+                  <span v-else-if="props.column.field == 'payment_option'">
+                    <span class="label label-info" v-if="parseInt(props.row.payment_option) === 1">Paid Online</span>
+                    <span class="label label-info" v-else-if="parseInt(props.row.payment_option) === 2">Cash On Delivery</span>
+                    <span class="label label-info" v-else-if="parseInt(props.row.payment_option) === 3">Pos On Delivery</span>
+                  </span>
+                  <span v-if="props.column.field == 'status'">
+                    <button class="btn btn-success" v-if="props.row.status === 'completed'">
+                      <i class="fa fa-check"></i> {{ props.row.status }}
+                    </button>
+                    <button class="btn btn-danger" v-else-if="props.row.status === 'failed'">
+                      <i class="fa fa-times"></i> {{ props.row.status }}
+                    </button>
+                    <button class="btn btn-info" v-else>
+                      <i class="fa fa-clock"></i> {{ props.row.status }}
+                    </button>
+                  </span>
+                </template>
+              </vue-good-table>
+            </div>
+            <div class="tab-pane fade" id="tab-bottom-left6">
+              <vue-good-table
+              :rows="companies"
+              :columns="companies_columns"
+              :pagination-options="{
+                enabled: true,
+                perPage: 5
+              }"
+            >
+              <template slot="table-row" slot-scope="props">
+                <span v-if="props.column.field == 'num'">
+                  {{ props.row.originalIndex + 1 }}
+                </span>
+                <span v-else-if="props.column.field == 'action'">
+                  <div>
+                    <a
+                      class="btn btn-info"
+                      style="cursor:pointer;"
+                      @click="editCompany(props.row)"
+                    >
+                      <i class="fa fa-check"></i> Edit
+                      </a
+                    >
+                  </div>
+                </span>
+              </template>
+            </vue-good-table>
+            <br/>
+            <p v-if="errors.length">
+                <b>Please correct the following error(s):</b>
+                <ul>
+                <li class="text-danger" v-for="error in errors" :key="error">{{ error }}</li>
+                </ul>
+            </p>
+            <div class="alert alert-success" v-if="success"><i class="material-icons" data-dismiss="alert">close</i>{{ success }}</div>
+            <div class="alert alert-danger" v-if="error"><i class="material-icons" data-dismiss="alert">close</i>{{ error }}</div>
 
-                        </td>
-                      </tr>
-                  </tbody>
-                </table>
+              <div id="vendor" v-if="user_details.user_type === 'vendor'">
+                <form @submit.prevent="checkCompanyForm">
+                  <div class="row">
+                    <div class="form-group">
+                        <input type="text" v-model="company.name" class="form-control" placeholder="Company Name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="file" class="form-control" @change="onFileChanges">
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" v-model="company.phone" pattern="^\+[1-9]\d{1,14}$" class="form-control" placeholder="Company Phone Number" required>
+                        <span class="note">Format: +2349034268873</span>
+                    </div>
+
+                    <div class="form-group">
+                        <input type="text" v-model="company.email" class="form-control" placeholder="Company Email" required>
+                    </div>
+
+                    <div class="form-group">
+                      <textarea type="text" v-model="company.address" class="form-control" rows="4" required placeholder="enter company address"></textarea>
+                    </div>
+                    <div class="form-group">
+                      <button type="submit" class="mb-2 btn btn-primary mr-2">Update Company</button>
+                    </div>
+                  </div>
+                </form>
               </div>
             </div>
           </div>
-          <!-- END TABBED CONTENT -->
         </div>
-        <!-- END RIGHT COLUMN -->
       </div>
     </div>
   </div>
@@ -343,11 +378,26 @@ export default {
         { label: "Description", field: "description", sortable: false },
         { label: "Action", field: "action", sortable: false }
       ],
+      order_columns: [
+        { label: "#", field: "num", sortable: false },
+        { label: "Client Phone", field: "phone", sortable: false },
+        { label: "Payment Type", field: "payment_option", sortable: false },
+        { label: "Amount", field: "total_amount", sortable: false },
+        { label: "Status", field: "status", sortable: false },
+        { label: "Action", field: "action", sortable: false }
+      ],
       support: [
         { label: "S/N", field: "num", sortable: false },
         { label: "Ticket No", field: "ticket_no", sortable: false },
         { label: "Subject", field: "title", sortable: false },
         { label: "Message", field: "shortmessage", sortable: false },
+        { label: "Action", field: "action", sortable: false }
+      ],
+      companies_columns: [
+        { label: "#", field: "num", sortable: false },
+        { label: "Company Name", field: "name" },
+        { label: "Telephone", field: "phone" },
+        { label: "Email", field: "email" },
         { label: "Action", field: "action", sortable: false }
       ],
       errors: [],
@@ -396,6 +446,31 @@ export default {
     this.userChange();
   },
   methods: {
+    capitalize(s) {
+      if (typeof s !== 'string') return ''
+      return s.charAt(0).toUpperCase() + s.slice(1)
+    },
+    async OrderStatus(orders, status) {
+      let count = 0
+      if(status === 'completed') {
+        await orders.forEach(order => {
+          if(order.status === 'completed') {
+            count += 1;
+          }
+        });
+        $('.completed').html(`${count} completed orders`)
+      }else {
+        await orders.forEach(order => {
+          if(order.status !== 'completed') {
+            count += 1;
+          }
+        });
+        $('.uncompleted').html(`${count} uncompleted orders`)
+      }
+    },
+    editCompany(company) {
+      this.company = company
+    },
     userChange(){
       if(this.user_details.user_type == 'vendor'){
         $('#vendor').show()
@@ -454,18 +529,13 @@ export default {
               this.getUserCompany()
               this.getUnassignRider()
             }
-            if(resp.data.company != null){
-              this.company = resp.data.company
-            }
             this.activities = resp.data.activities
             this.supports  = resp.data.supports
             this.orders = resp.data.orders
         }).catch(err => console.log())
     },
-
     update(){
         let component = this;
-        (component.user_details.user_type === 'vendor') ? component.user_details.company = component.company : ''
         this.$store.dispatch('updateUser', [component.user_details,this.$store.state.auth.headers])
         .then((resp) => {
           this.error = ''
@@ -477,12 +547,65 @@ export default {
             toastr.success(resp.data.msg)
             this.success = resp.data.msg
             this.errors = []
+          }
+        })
+        .catch(err => {
+            this.error = 'please verify that the data entered are correct.'
+        })
+    },
+    updateCompany(){
+        let component = this;
+        this.$store.dispatch('updateCompany', [component.company,this.$store.state.auth.headers])
+        .then((resp) => {
+          this.error = ''
+          this.success = ''
+          if(resp.data.error){
+            toastr.error(resp.data.msg)
+            this.error = resp.data.msg
+          }else{
+            toastr.success(resp.data.msg)
+            this.success = resp.data.msg
+            this.errors = []
+            this.company = {
+              name: '',
+              email: '',
+              phone: '',
+              address: '',
+              image: ''
+            },
             this.getUserCompany();
           }
         })
         .catch(err => {
             this.error = 'please verify that the data entered are correct.'
         })
+    },
+    checkCompanyForm: function (e) {
+        if (this.company.name && this.company.email && this.company.address && this.company.phone && this.company.image) {
+        this.updateCompany();
+        return true;
+        }
+
+        this.errors = [];
+        if (!this.company.name) {
+          this.errors.push('Company required.');
+        }
+        if (!this.company.phone) {
+          this.errors.push('Phone Number required.');
+        }
+        if (!this.company.email) {
+          this.errors.push('Email required.');
+        }else if (!this.validEmail(this.company.email)) {
+          this.errors.push('Valid email required.');
+        }
+        if (!this.company.address) {
+          this.errors.push('Address required.');
+        }
+        if (!this.company.image) {
+          this.errors.push('Image required.');
+        }
+        e.preventDefault();
+
     },
     checkForm: function (e) {
         if (this.user_details.title && this.user_details.first_name && this.user_details.last_name && this.user_details.email && this.user_details.phone) {
@@ -492,27 +615,21 @@ export default {
 
         this.errors = [];
         if (!this.user_details.title) {
-        this.errors.push('Title required.');
-        return false;
+          this.errors.push('Title required.');
         }
         if (!this.user_details.first_name) {
-        this.errors.push('FirstName required.');
-        return false;
+          this.errors.push('FirstName required.');
         }
         if (!this.user_details.last_name) {
-        this.errors.push('LastName required.');
-        return false;
+          this.errors.push('LastName required.');
         }
         if (!this.user_details.phone) {
-        this.errors.push('Phone Number required.');
-        return false;
+          this.errors.push('Phone Number required.');
         }
         if (!this.user_details.email) {
-        this.errors.push('Email required.');
-        return false;
+          this.errors.push('Email required.');
         }else if (!this.validEmail(this.user_details.email)) {
-        this.errors.push('Valid email required.');
-        return false;
+          this.errors.push('Valid email required.');
         }
         e.preventDefault();
 
