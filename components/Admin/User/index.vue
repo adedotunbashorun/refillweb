@@ -107,6 +107,14 @@
                     >
                   </div>
                 </span>
+                <span v-else-if="props.column.field == 'is_active'">
+                  <label class="label label-warning" v-if="props.row.is_active === false">
+                      <i class="fa fa-times"></i> Pending
+                  </label>
+                  <label class="label label-success" v-if="props.row.is_active === true">
+                      <i class="fa fa-check"></i> Approved
+                  </label>
+                </span>
               </template>
             </vue-good-table>
           </div>

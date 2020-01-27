@@ -11,7 +11,7 @@
 
 							<li><nuxt-link to="/admin/company" class=""><i class="lnr lnr-code"></i> <span>Companies</span></nuxt-link></li>
 
-							<!-- <li><nuxt-link to="/admin/service_category" class=""><i class="lnr lnr-chart-bars"></i> <span>Service Category</span></nuxt-link></li> -->
+							<li><nuxt-link to="/admin/payments" class=""><i class="fa fa-money"></i> <span>Payments</span></nuxt-link></li>
 
               <li><nuxt-link to="/admin/order" class=""><i class="lnr lnr-chart-bars"></i> <span>Orders</span></nuxt-link></li>
 

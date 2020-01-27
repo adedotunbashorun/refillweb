@@ -7,13 +7,13 @@
         <div class="panel">
           <div class="panel-heading">
             <h3 class="panel-title">
-              Company List
+              Payment List
             </h3>
             <hr />
           </div>
           <div class="panel-body">
             <vue-good-table
-              :rows="companies"
+              :rows="payments"
               :columns="columns"
               :pagination-options="{
                 enabled: true,
@@ -37,42 +37,32 @@
                       <i class="fa fa-eye"></i> View
                       </nuxt-link
                     >
-                    <a
-                      class="btn btn-success"
-                      @click="approveCompany(props.row._id)"
-                      title="approve"
-                      v-if="props.row.status === false"
-                    >
-                      <i class="fa fa-check"></i> Approve
-                      </a
-                    >
-                    <a
-                      class="btn btn-danger"
-                      @click="approveCompany(props.row._id)"
-                      title="Decline User"
-                      v-if="props.row.status === true"
-                    >
-                      <i class="fa fa-times"></i> Decline
-                      </a
-                    >
                   </div>
                 </span>
                 <span v-else-if="props.column.field == 'vendor'">
-                  {{ props.row.user_id.first_name + ' ' + props.row.user_id.last_name }}
+                  {{ props.row.vendor_id.first_name + ' ' + props.row.vendor_id.last_name }}
                 </span>
-                <span v-else-if="props.column.field == 'email'">
-                  {{ props.row.email }}
+                <span v-else-if="props.column.field == 'company'">
+                  {{ props.row.company_id.name }}
                 </span>
-                <span v-else-if="props.column.field == 'phone'">
-                  {{ props.row.phone }}
+                <span v-else-if="props.column.field == 'client'">
+                  {{ props.row.client_id.first_name + ' ' + props.row.client_id.last_name }}
+                </span>
+                <span v-else-if="props.column.field == 'type'">
+                  <label class="label label-success">
+                      <i class="fa fa-eye"></i> {{ props.row.type }}
+                  </label>
                 </span>
                 <span v-else-if="props.column.field == 'status'">
-                  <label class="label label-warning" v-if="props.row.status === false">
+                  <label class="label label-success" v-if="props.row.status === 'success'">
+                      <i class="fa fa-check"></i> Paid
+                  </label>
+                  <label class="label label-info" v-else>
                       <i class="fa fa-times"></i> Pending
                   </label>
-                  <label class="label label-success" v-if="props.row.status === true">
-                      <i class="fa fa-check"></i> Approved
-                  </label>
+                </span>
+                <span v-else-if="props.column.field == 'amount'">
+                  ₦{{ parseFloat(props.row.amount) }}
                 </span>
               </template>
             </vue-good-table>
@@ -88,17 +78,7 @@ import "vue-good-table/dist/vue-good-table.css";
 import { VueGoodTable } from "vue-good-table";
 
 export default {
-  props: ["companies", "page"],
-  methods: {
-    approveCompany(id) {
-      this.$store
-        .dispatch("approveCompany", [id, this.$store.state.auth.headers])
-        .then(resp => {
-          toastr.success(resp.data.msg);
-        })
-        .catch(err => toastr.error(err.message));
-    },
-  },
+  props: ["payments", "page"],
   components: {
     VueGoodTable
   },
@@ -107,11 +87,11 @@ export default {
       columns: [
         { label: "#", field: "num", sortable: false },
         { label: "Vendor Name", field: "vendor" },
-        { label: "Company Name", field: "name" },
-        { label: "Telephone", field: "phone" },
-        { label: "Email", field: "email" },
-        { label: "Is Active", field: "status" },
-        { label: "Action", field: "action", sortable: false }
+        { label: "Company Name", field: "company" },
+        { label: "Client Name", field: "client" },
+        { label: "Type", field: "type" },
+        { label: "Amount", field: "amount" },
+        { label: "Status", field: "status" },
       ]
     };
   }

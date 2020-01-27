@@ -63,15 +63,15 @@
                   >
                 </span>
                 <span v-if="props.column.field == 'status'">
-                  <button class="btn btn-success" v-if="props.row.status === 'completed'">
+                  <label class="label label-success" v-if="props.row.status === 'completed'">
                       <i class="fa fa-check"></i> {{ props.row.status }}
-                  </button>
-                  <button class="btn btn-danger" v-else-if="props.row.status === 'failed'">
+                  </label>
+                  <label class="label label-danger" v-else-if="props.row.status === 'failed'">
                       <i class="fa fa-times"></i> {{ props.row.status }}
-                  </button>
-                  <button class="btn btn-info" v-else>
+                  </label>
+                  <label class="label label-info" v-else>
                       <i class="fa fa-clock"></i> {{ props.row.status }}
-                  </button>
+                  </label>
                 </span>
               </template>
             </vue-good-table>

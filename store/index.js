@@ -7,6 +7,7 @@ import settings from './settings'
 import supports from './supports'
 import orders from './orders'
 import company from './company'
+import payments from './payments'
 
 const store = () => {
   return new Vuex.Store({
@@ -15,9 +16,10 @@ const store = () => {
       auth,
       classes,
       company,
+      orders,
+      payments,
       settings,
       supports,
-      orders
     }
 
   })
