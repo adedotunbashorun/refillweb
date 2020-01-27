@@ -361,13 +361,37 @@
         <div class="container">
           <div class="row justify-content-center">
             <div class="col-md-9 col-lg-6">
-              <form class="form-inline" method="POST" action="#">
+              <form
+                class="form-inline"
+                method="POST"
+                action="#"
+                @submit.prevent="subscribe"
+              >
+                <div
+                  class="alert alert-success alert-dismissible"
+                  role="alert"
+                  v-if="subscribeSuccess"
+                >
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <i class="fa fa-check-circle"></i> {{  subscribeSuccess }}
+                </div>
                 <input
+                  v-model="email"
                   type="email"
                   class="form-control "
                   placeholder="Email Adress"
                   name="email"
+                  data-rule="email"
+                  data-msg="Please enter a valid email"
                 />
+                <div class="validation"></div>
                 <button type="submit" class="btn btn-default">
                   <i class="fa fa-location-arrow"></i>Subscribe
                 </button>
@@ -437,8 +461,6 @@
 
           <div class="col-lg-5 col-md-8">
             <div class="form">
-              <div id="sendmessage">Your message has been sent. Thank you!</div>
-              <div id="errormessage"></div>
               <form
                 action=""
                 method="post"
@@ -446,16 +468,55 @@
                 class="contactForm"
                 @submit.prevent="submit"
               >
-                <p v-if="errors.length">
+                <div v-if="errors.length">
                   <b>Please correct the following error(s):</b>
-                </p>
-
-                <ul>
-                  <li class="text-danger" v-for="error in errors" :key="error">
-                    {{ error }}
-                  </li>
-                </ul>
-                <!-- </p> -->
+                  <div
+                    class="alert alert-danger alert-dismissible"
+                    role="alert"
+                    v-for="error in errors"
+                    :key="error"
+                  >
+                    <button
+                      type="button"
+                      class="close"
+                      data-dismiss="alert"
+                      aria-label="Close"
+                    >
+                      <span aria-hidden="true">&times;</span>
+                    </button>
+                    <i class="fa fa-times-circle"></i> {{ error }}
+                  </div>
+                </div>
+                <div
+                  class="alert alert-danger alert-dismissible"
+                  role="alert"
+                  v-if="error"
+                >
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <i class="fa fa-times-circle"></i> {{ error }}
+                </div>
+                <div
+                  class="alert alert-success alert-dismissible"
+                  role="alert"
+                  v-if="success"
+                >
+                  <button
+                    type="button"
+                    class="close"
+                    data-dismiss="alert"
+                    aria-label="Close"
+                  >
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                  <i class="fa fa-check-circle"></i> {{ success }}
+                </div>
                 <div class="form-group">
                   <input
                     v-model="info.full_name"
@@ -464,8 +525,16 @@
                     class="form-control"
                     id="name"
                     placeholder="Your Name"
-                    data-rule="minlen:4"
-                    data-msg="Please enter at least 4 chars"
+                  />
+                  <div class="validation"></div>
+                </div><div class="form-group">
+                  <input
+                    v-model="info.subject"
+                    type="text"
+                    class="form-control"
+                    name="subject"
+                    id="subject"
+                    placeholder="Subject"
                   />
                   <div class="validation"></div>
                 </div>
@@ -484,16 +553,13 @@
                 </div>
                 <div class="form-group">
                   <input
-                    v-model="info.subject"
+                    v-model="info.phone"
                     type="text"
                     class="form-control"
-                    name="subject"
-                    id="subject"
-                    placeholder="Subject"
-                    data-rule="minlen:4"
-                    data-msg="Please enter at least 8 chars of subject"
+                    name="phone"
+                    id="phone"
+                    placeholder="Your Phone Number"
                   />
-                  <div class="validation"></div>
                 </div>
                 <div class="form-group">
                   <textarea
@@ -501,8 +567,6 @@
                     class="form-control"
                     name="message"
                     rows="5"
-                    data-rule="required"
-                    data-msg="Please write something for us"
                     placeholder="Message"
                   ></textarea>
                   <div class="validation"></div>
@@ -532,6 +596,10 @@ export default {
   data() {
     return {
       errors: [],
+      success: null,
+      error: null,
+      subscribeSuccess: null,
+      email: "",
       info: {
         full_name: "",
         email: "",
@@ -562,6 +630,12 @@ export default {
       } else {
         this.errors = this.errors.filter(el => el !== "Subject");
       }
+      if (this.info.phone == "") {
+        if (!this.errors.includes("Phone"))
+          this.errors = [...this.errors, "Phone"];
+      } else {
+        this.errors = this.errors.filter(el => el !== "Phone");
+      }
       if (this.info.message == "") {
         if (!this.errors.includes("Message"))
           this.errors = [...this.errors, "Message"];
@@ -569,18 +643,32 @@ export default {
         this.errors = this.errors.filter(el => el !== "Message");
       }
       if (this.errors.length < 1) {
-        return new Promise((resolve, reject) => {
-          axios
-            .post(config.apiUrl + "/api/contact/create", this.info)
-            .then(resp => {
-
-            })
-            .catch(err => {
-
-            });
-        });
+        this.sendingRequest = true;
+        axios
+          .post(config.apiUrl + "/api/contact/create", this.info)
+          .then((resp) => {
+            this.success = resp.data.msg;
+            this.info = {
+              full_name: "",
+              email: "",
+              phone: "",
+              message: "",
+              subject: ""
+            }
+          })
+          .catch(err => {
+            this.error = err.msg;
+          });
       }
-      return;
+    },
+    subscribe() {
+      axios
+        .post(config.apiUrl + "/api/email_alert", {email: this.email})
+        .then((resp) => {
+          this.subscribeSuccess = resp.data.msg
+          this.email = "";
+        })
+        .catch(err => {});
     }
   }
 };
