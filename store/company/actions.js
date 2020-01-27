@@ -45,6 +45,16 @@ export const actions = {
     })
   },
 
+  approveCompany({ commit }, [payload,header]) {
+    return new Promise((resolve, reject) => {
+      Api.Company.approveCompany(payload, header).then(response => {
+        resolve(response)
+      }).catch(err => {
+        reject(err)
+      })
+    })
+  },
+
   addCompany ({commit}, [payload,header]) {
     commit(ADD_COMPANY)
     return new Promise((resolve, reject) => {

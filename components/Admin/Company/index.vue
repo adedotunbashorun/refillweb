@@ -39,7 +39,6 @@
                     >
                     <a
                       class="btn btn-success"
-                      style="cursor:pointer;"
                       @click="approveCompany(props.row._id)"
                       title="approve"
                       v-if="props.row.status === false"
@@ -48,11 +47,10 @@
                       </a
                     >
                     <a
-                      class="btn btn-warning"
-                      style="cursor:pointer;"
+                      class="btn btn-danger"
                       @click="approveCompany(props.row._id)"
                       title="Decline User"
-                      v-if="props.row.approval_status === true"
+                      v-if="props.row.status === true"
                     >
                       <i class="fa fa-times"></i> Decline
                       </a
@@ -97,7 +95,7 @@ export default {
   methods: {
     approveCompany(id) {
       this.$store
-        .dispatch("approveUser", [id, this.$store.state.auth.headers])
+        .dispatch("approveCompany", [id, this.$store.state.auth.headers])
         .then(resp => {
           toastr.success(resp.data.msg);
         })
