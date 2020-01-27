@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<nuxt-link to="/admin/dashboard"><img src="/images/refill_logo.png" style="width:50px;height:30px;" alt="ServeMe Logo" class="img-responsive logo"></nuxt-link>
+				<nuxt-link to="/admin/dashboard"><img src="/images/refill_logo.png" style="width:100px;height:30px;" alt="Refill Logo" class="img-responsive logo"></nuxt-link>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -21,7 +21,7 @@
 							</ul>
 						</li>
 						<li class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img :src="user.cloud_image_url" class="img-circle" alt="Avatar"> <span>{{user.first_name + ' ' + user.last_name}}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown"><img :src="user.cloud_image_url" class="img-circle" alt="Avatar" /> <span>{{user.first_name + ' ' + user.last_name}}</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
 							<ul class="dropdown-menu">
 								<li><nuxt-link :to="{name: 'admin-users-profile'}"><i class="lnr lnr-user"></i> <span>My Profile</span></nuxt-link></li>
 								<li><nuxt-link :to="{name: 'admin-supports'}"><i class="lnr lnr-envelope"></i> <span>Message</span></nuxt-link></li>

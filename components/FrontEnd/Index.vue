@@ -275,84 +275,6 @@
       </div>
     </section>
 
-    <!-- <section id="team" class="padd-section text-center wow fadeInUp">
-
-      <div class="container">
-        <div class="section-title text-center">
-
-          <h2>Team Member</h2>
-          <p class="separator">Integer cursus bibendum augue ac cursus .</p>
-
-        </div>
-      </div>
-
-      <div class="container">
-        <div class="row">
-
-          <div class="col-md-6 col-md-4 col-lg-3">
-            <div class="team-block bottom">
-              <img src="/frontend/img/team/1.jpg" class="img-responsive" alt="img">
-              <div class="team-content">
-                <ul class="list-unstyled">
-                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-                <span>manager</span>
-                <h4>Kimberly Tran</h4>
-              </div>
-            </div>
-          </div>
-
-        <div class="col-md-6 col-md-4 col-lg-3">
-            <div class="team-block bottom">
-              <img src="/frontend/img/team/2.jpg" class="img-responsive" alt="img">
-              <div class="team-content">
-                <ul class="list-unstyled">
-                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-                <span>manager</span>
-                <h4>Kimberly Tran</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-md-4 col-lg-3">
-            <div class="team-block bottom">
-              <img src="/frontend/img/team/3.jpg" class="img-responsive" alt="img">
-              <div class="team-content">
-                <ul class="list-unstyled">
-                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-                <span>manager</span>
-                <h4>Kimberly Tran</h4>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-6 col-md-4 col-lg-3">
-            <div class="team-block bottom">
-              <img src="/frontend/img/team/4.jpg" class="img-responsive" alt="img">
-              <div class="team-content">
-                <ul class="list-unstyled">
-                  <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                  <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                  <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                </ul>
-                <span>manager</span>
-                <h4>Kimberly Tran</h4>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section> -->
-
     <section id="testimonials" class="padd-section text-center wow fadeInUp">
       <div class="container">
         <div class="row justify-content-center">
@@ -622,8 +544,6 @@ export default {
   },
   methods: {
     submit() {
-      // alert(this.info.full_name)
-      // alert(this.errors)
       if (this.info.full_name == "") {
         if (!this.errors.includes("Full Name"))
           this.errors = [...this.errors, "Full Name"];
@@ -653,10 +573,10 @@ export default {
           axios
             .post(config.apiUrl + "/api/contact/create", this.info)
             .then(resp => {
-              resolve(resp);
+
             })
             .catch(err => {
-              reject(err);
+
             });
         });
       }

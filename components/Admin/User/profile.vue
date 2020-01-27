@@ -16,16 +16,16 @@
             <div class="profile-main">
               <img :src="user_details.cloud_image_url" class="img-circle" alt="Avatar" width="100" height="100">
               <h3 class="name">{{ capitalize(user_details.first_name) +' ' + capitalize(user_details.last_name)}}</h3>
-              <button
-                class="online-status status-available btn-success"
+              <label
+                class="online-status status-available label-success"
                 v-if="user_details.online_status === true"
                 @click="toggleUserOnlineStatus()"
-                >Available</button>
-              <button
-                class="offline-status status-available btn-warning"
+                > Available </label>
+              <label
+                class="offline-status status-available label-warning"
                 v-else
                 @click="toggleUserOnlineStatus()"
-                >Not Available</button>
+                > Not Available </label>
             </div>
             <div class="profile-stat">
               <div class="row">
@@ -72,6 +72,21 @@
           </div>
         </div>
         <div class="profile-right">
+          <div v-if="errors.length">
+            <b>Please correct the following error(s):</b>
+            <div class="alert alert-danger alert-dismissible" role="alert" v-for="error in errors" :key="error">
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+              <i class="fa fa-times-circle"></i> {{ error }}
+            </div>
+          </div>
+          <div class="alert alert-danger alert-dismissible" role="alert" v-if="error">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <i class="fa fa-times-circle"></i> {{ error }}
+          </div>
+          <div class="alert alert-success alert-dismissible" role="alert" v-if="success">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <i class="fa fa-check-circle"></i> {{ success }}
+          </div>
           <div class="custom-tabs-line tabs-line-bottom left-aligned">
             <ul class="nav" role="tablist">
               <li class="active">
@@ -122,14 +137,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <strong class="text-muted d-block mb-2"></strong>
-                            <p v-if="errors.length">
-                                <b>Please correct the following error(s):</b>
-                                <ul>
-                                <li class="text-danger" v-for="error in errors" :key="error">{{ error }}</li>
-                                </ul>
-                            </p>
-                            <div class="alert alert-success" v-if="success"><i class="material-icons" data-dismiss="alert">close</i>{{ success }}</div>
-                            <div class="alert alert-danger" v-if="error"><i class="material-icons" data-dismiss="alert">close</i>{{ error }}</div>
                             <div class="form-group">
                                 <select class="form-control" v-model="user_details.title">
                                     <option value="">-- Select Title --</option>
@@ -185,14 +192,6 @@
                     <div class="row">
                         <div class="col-md-12">
                             <strong class="text-muted d-block mb-2"></strong>
-                            <p v-if="errors.length">
-                                <b>Please correct the following error(s):</b>
-                                <ul>
-                                <li class="text-danger" v-for="error in errors" :key="error">{{ error }}</li>
-                                </ul>
-                            </p>
-                            <div class="alert alert-success" v-if="success"><i class="material-icons" data-dismiss="alert">close</i>{{ success }}</div>
-                            <div class="alert alert-danger" v-if="error"><i class="material-icons" data-dismiss="alert">close</i>{{ error }}</div>
                             <div class="form-group">
                                 <select class="form-control" v-model="assign.company_id" required>
                                     <option value="">-- Select Company --</option>
@@ -319,15 +318,6 @@
               </template>
             </vue-good-table>
             <br/>
-            <p v-if="errors.length">
-                <b>Please correct the following error(s):</b>
-                <ul>
-                <li class="text-danger" v-for="error in errors" :key="error">{{ error }}</li>
-                </ul>
-            </p>
-            <div class="alert alert-success" v-if="success"><i class="material-icons" data-dismiss="alert">close</i>{{ success }}</div>
-            <div class="alert alert-danger" v-if="error"><i class="material-icons" data-dismiss="alert">close</i>{{ error }}</div>
-
               <div id="vendor" v-if="user_details.user_type === 'vendor'">
                 <form @submit.prevent="checkCompanyForm">
                   <div class="row">

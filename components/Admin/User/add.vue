@@ -14,21 +14,28 @@
                   <div class="row">
                       <div class="col">
                           <strong class="text-muted d-block mb-2"></strong>
-                          <p v-if="errors.length">
+                          <div v-if="errors.length">
                               <b>Please correct the following error(s):</b>
-                              <ul>
-                              <li class="text-danger" v-for="error in errors" :key="error">{{ error }}</li>
-                              </ul>
-                          </p>
-                          <div class="alert alert-success" v-if="success"><button type="button" class="pi-close" data-dismiss="alert"><i class="material-icons" data-dismiss="alert">close</i></button>{{ success }}</div>
-                          <div class="alert alert-danger" v-if="error"><button type="button" class="pi-close" data-dismiss="alert"><i class="material-icons" data-dismiss="alert">close</i></button>{{ error }}</div>
+                              <div class="alert alert-danger alert-dismissible" role="alert" v-for="error in errors" :key="error">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <i class="fa fa-times-circle"></i> {{ error }}
+                              </div>
+                          </div>
+                          <div class="alert alert-danger alert-dismissible" role="alert" v-if="error">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <i class="fa fa-times-circle"></i> {{ error }}
+                          </div>
+                          <div class="alert alert-success alert-dismissible" role="alert" v-if="success">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <i class="fa fa-check-circle"></i> {{ error }}
+                          </div>
                           <div class="form-group">
-                              <select class="form-control" v-model="user.title">
-                                  <option value="">-- Select Title --</option>
-                                  <option value="Mr">Mr.</option>
-                                  <option value="Mrs">Mrs.</option>
-                                  <option value="Miss">Miss.</option>
-                              </select>
+                            <select class="form-control" v-model="user.title">
+                                <option value="">-- Select Title --</option>
+                                <option value="Mr">Mr.</option>
+                                <option value="Mrs">Mrs.</option>
+                                <option value="Miss">Miss.</option>
+                            </select>
                           </div>
                           <div class="form-group">
                               <select class="form-control" v-model="user.user_type">
