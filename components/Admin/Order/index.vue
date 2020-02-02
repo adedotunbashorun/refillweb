@@ -19,6 +19,9 @@
                 enabled: true,
                 perPage: 5
               }"
+              :search-options="{
+                enabled: true
+              }"
             >
               <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'num'">
@@ -62,7 +65,7 @@
                     </i></nuxt-link
                   >
                 </span>
-                <span v-if="props.column.field == 'status'">
+                <span v-else-if="props.column.field == 'status'">
                   <label class="label label-success" v-if="props.row.status === 'completed'">
                       <i class="fa fa-check"></i> {{ props.row.status }}
                   </label>
@@ -72,6 +75,9 @@
                   <label class="label label-info" v-else>
                       <i class="fa fa-clock"></i> {{ props.row.status }}
                   </label>
+                </span>
+                <span v-else-if="props.column.field === 'order_date'">
+                  <Adedotun :value="props.row.order_date" fn="date"/>
                 </span>
               </template>
             </vue-good-table>
@@ -85,7 +91,6 @@
 import { config } from "../../../config";
 import "vue-good-table/dist/vue-good-table.css";
 import { VueGoodTable } from "vue-good-table";
-
 export default {
   props: ["orders", "page"],
   data() {
@@ -100,6 +105,7 @@ export default {
         { label: "Amount", field: "total_amount", sortable: false },
         { label: "Address", field: "address", sortable: false },
         { label: "Status", field: "status", sortable: false },
+        { label: "Date", field: "order_date" },
         { label: "Action", field: "action", sortable: false }
       ]
     };
@@ -113,7 +119,8 @@ export default {
     }
   },
   components: {
-    VueGoodTable
+    VueGoodTable,
+    Adedotun: () => import('~/components/Extra/adedotun.vue')
   },
   methods: {
     orderByType: async event => {

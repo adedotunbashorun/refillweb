@@ -23,7 +23,7 @@
             </div>
             <div class="alert alert-success alert-dismissible" role="alert" v-if="success">
               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-              <i class="fa fa-check-circle"></i> {{ error }}
+              <i class="fa fa-check-circle"></i> {{ success }}
             </div>
             <div class="custom-tabs-line tabs-line-bottom left-aligned">
             <ul class="nav" role="tablist">
@@ -69,6 +69,10 @@
 
                   <div class="form-group">
                     <input type="number" class="form-control" v-model="settings.price_km" placeholder="Price Per Km" aria-describedby="basic-addon1">
+                  </div>
+
+                  <div class="form-group">
+                    <input type="number" class="form-control" v-model="settings.base_price" placeholder="Delivery Base Price" aria-describedby="basic-addon1">
                   </div>
 
                   <div class="form-group">
@@ -122,50 +126,46 @@
                 </form>
               </div>
           </div>
-
-          </div>
         </div>
       </div>
     </div>
-
-
+  </div>
 </div>
 
 </template>
 <script>
-import {config} from '../../../config'
 export default {
   props:['page'],
     data(){
-        return {
-            errors: [],
-            id: null,
-            settings: {
-                app_name:'',
-                email:'',
-                paystack_live_public_key:'',
-                paystack_secret_public_key:'',
-                pusher_app_id: '',
-                pusher_app_key: '',
-                pusher_app_secret: '',
-                pusher_app_cluster: '',
-                pusher_app_encrypted: '',
-                description:'',
-                maximum_km: '',
-                price_km: ''
-            },
-            success: '',
-            error: ''
-        }
+      return {
+          errors: [],
+          id: null,
+          settings: {
+              app_name:'',
+              email:'',
+              base_price: '',
+              paystack_live_public_key:'',
+              paystack_secret_public_key:'',
+              pusher_app_id: '',
+              pusher_app_key: '',
+              pusher_app_secret: '',
+              pusher_app_cluster: '',
+              pusher_app_encrypted: '',
+              description:'',
+              maximum_km: '',
+              price_km: ''
+          },
+          success: '',
+          error: ''
+      }
     },
     mounted(){
-      this.apiUrl = config.apiUrl
       this.allSettings()
     },
     methods: {
         register(){
             let component = this;
-            (this.id !== null) ? component.settings.id = this.id : ''
+            (this.id === null) ? '' : component.settings.id = this.id
             this.$store.dispatch('addSettings', [component.settings,this.$store.state.auth.headers])
             .then((resp) => {
                this.error = ''
@@ -207,7 +207,7 @@ export default {
         allSettings(){
           this.$store.dispatch('allSettings', this.$store.state.auth.headers)
             .then((resp) => {
-              (resp.data.settings == null) ? '' : this.settings = resp.data.settings.data
+              this.settings = resp.data.settings.data
               this.id = resp.data.settings._id
             }).catch(err =>{
 

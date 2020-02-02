@@ -24,7 +24,7 @@ export const mutations = {
   },
   [ALL_SETTINGS_SUCCESS] (state, payload) {
     state.showLoader = false
-    state.settings = payload.settings
+    state.settings = payload.settings.data
   },
   [ALL_SETTINGS_FAILURE](state, payload) {
     state.showLoader = false

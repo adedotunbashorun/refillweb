@@ -14,9 +14,6 @@
     </div>
 </template>
 <script>
-import Header from '~/components/Layout/Admin/Header.vue'
-import SideBar from '~/components/Layout/Admin/SideBar.vue'
-import Footer from '~/components/Layout/Admin/Footer.vue'
 import {config} from '../config'
 import axios from 'axios'
 export default {
@@ -57,7 +54,9 @@ export default {
         }
     },
     components: {
-        Header,Footer,SideBar
+        Header: () => import('~/components/Layout/Admin/Header.vue'),
+        Footer: () => import('~/components/Layout/Admin/Footer.vue'),
+        SideBar: () => import('~/components/Layout/Admin/SideBar.vue')
     },
     computed:{
         user(){

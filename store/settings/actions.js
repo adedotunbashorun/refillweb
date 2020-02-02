@@ -23,10 +23,10 @@ export const actions = {
     commit(ALL_SETTINGS)
     return new Promise((resolve, reject) => {
       Api.Settings.allSettings(header).then( response => {
-        commit(ALL_SETTINGS_SUCCESS,response.data)
+        // commit(ALL_SETTINGS_SUCCESS,response.data)
         resolve(response)
       }).catch(err => {
-        commit(ALL_SETTINGS_FAILURE, err)
+        // commit(ALL_SETTINGS_FAILURE, err)
         reject(err)
       })
     })
@@ -46,13 +46,13 @@ export const actions = {
   },
 
   settingsById({ commit }, [payload,header]) {
-    commit(SETTINGS_BY_ID)
+    // commit(SETTINGS_BY_ID)
     return new Promise((resolve, reject) => {
       Api.Settings.settingsById(payload, header).then(response => {
-        commit(SETTINGS_BY_ID_SUCCESS, response.data)
+        // commit(SETTINGS_BY_ID_SUCCESS, response.data)
         resolve(response)
       }).catch(err => {
-        commit(SETTINGS_BY_ID_FAILURE, err)
+        // commit(SETTINGS_BY_ID_FAILURE, err)
         reject(err)
       })
     })
@@ -72,13 +72,13 @@ export const actions = {
   },
 
   addSettings ({commit}, [payload,header]) {
-    commit(ADD_SETTINGS)
+    // commit(ADD_SETTINGS)
     return new Promise((resolve, reject) => {
       Api.Settings.addSettings(payload,header).then(response => {
-        commit(ADD_SETTINGS_SUCCESS, response.data)
+        // commit(ADD_SETTINGS_SUCCESS, response.data)
         resolve(response)
       }).catch(err => {
-        commit(ADD_SETTINGS_FAILURE, err)
+        // commit(ADD_SETTINGS_FAILURE, err)
         reject(err)
       })
     })

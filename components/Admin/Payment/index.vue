@@ -19,6 +19,9 @@
                 enabled: true,
                 perPage: 5
               }"
+              :search-options="{
+                enabled: true
+              }"
             >
               <template slot="table-row" slot-scope="props">
                 <span v-if="props.column.field == 'num'">
@@ -64,6 +67,9 @@
                 <span v-else-if="props.column.field == 'amount'">
                   ₦{{ parseFloat(props.row.amount) }}
                 </span>
+                <span v-else-if="props.column.field === 'createdAt'">
+                  <Adedotun :value="props.row.createdAt" fn="date"/>
+                </span>
               </template>
             </vue-good-table>
           </div>
@@ -80,7 +86,8 @@ import { VueGoodTable } from "vue-good-table";
 export default {
   props: ["payments", "page"],
   components: {
-    VueGoodTable
+    VueGoodTable,
+    Adedotun: () => import('~/components/Extra/adedotun.vue')
   },
   data() {
     return {
@@ -91,6 +98,7 @@ export default {
         { label: "Client Name", field: "client" },
         { label: "Type", field: "type" },
         { label: "Amount", field: "amount" },
+        { label: "Date", field: "createdAt" },
         { label: "Status", field: "status" },
       ]
     };

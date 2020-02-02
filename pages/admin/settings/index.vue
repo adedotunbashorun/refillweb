@@ -2,7 +2,6 @@
     <Settings :page="page"/>
 </template>
 <script>
-import Settings from '~/components/Admin/Settings/index.vue'
 export default {
     layout: 'admin',
     data(){
@@ -11,7 +10,7 @@ export default {
       }
     },
     components:{
-        Settings
+        Settings: () => import('~/components/Admin/Settings/index.vue')
     },
 }
 </script>
