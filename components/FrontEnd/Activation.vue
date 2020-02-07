@@ -56,7 +56,7 @@ export default {
   methods: {
     async activate() {
       try {
-        let resp = await axios.patch(`${config.apiUrl}/api/activate/${this.$route.query.slug}`);
+        let resp = await axios.get(`${config.apiUrl}/api/activate/${this.$route.query.slug}`);
         if(resp.data.error) {
           this.error = resp.data.msg;
         }else {
