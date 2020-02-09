@@ -6,6 +6,7 @@ import { actions } from './actions'
 
 export default {
   state: {
+    msg: '',
     users: [],
     headers:'',
     error: '',

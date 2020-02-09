@@ -6,6 +6,7 @@ import {
   USER_BY_ID_SUCCESS,
   UPDATE_USER,
   UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILURE,
   REMOVE_USER,
   REMOVE_USER_SUCCESS,
   REMOVE_USER_FAILURE,
@@ -107,6 +108,10 @@ export const mutations = {
   },
   [UPDATE_USER_SUCCESS]: (state, payload) => {
     state.showLoader = false
+  },
+  [UPDATE_USER_FAILURE]: (state, payload) => {
+    state.showLoader = false
+    state.msg = payload.msg
   },
   [REMOVE_USER]: (state, payload) => {
     state.showLoader = true

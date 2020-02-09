@@ -178,6 +178,7 @@ export const actions = {
         commit(UPDATE_USER_SUCCESS, response.data)
         resolve(response)
       }).catch(err => {
+        console.log(err);
         commit(UPDATE_USER_FAILURE, err)
         reject(err)
       })

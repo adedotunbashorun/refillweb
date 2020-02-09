@@ -391,39 +391,39 @@ export default {
         { label: "Action", field: "action", sortable: false }
       ],
       errors: [],
-        user_details: {
-            title:'',
-            user_type: '',
-            address:'',
-            first_name:'',
-            last_name:'',
-            email:'',
-            phone:'',
-            brief : '',
-            profile_image: '',
-        },
-        assign:{
-          company_id: '',
-          rider_id: '',
-          vendor_id: ''
-        },
-        company: {
-          name: '',
-          email: '',
-          phone: '',
-          address: '',
-          image: ''
-        },
-        image: '',
-        activities:[],
-        riders: [],
-        companies: [],
-        supports:[],
-        orders: [],
-        roles:[],
-        permission:[],
-        success: '',
-        error: ''
+      user_details: {
+          title:'',
+          user_type: '',
+          address:'',
+          first_name:'',
+          last_name:'',
+          email:'',
+          phone:'',
+          brief : '',
+          profile_image: '',
+      },
+      assign:{
+        company_id: '',
+        rider_id: '',
+        vendor_id: ''
+      },
+      company: {
+        name: '',
+        email: '',
+        phone: '',
+        address: '',
+        image: ''
+      },
+      image: '',
+      activities:[],
+      riders: [],
+      companies: [],
+      supports:[],
+      orders: [],
+      roles:[],
+      permission:[],
+      success: null,
+      error: null
     };
   },
   components: {
@@ -472,8 +472,8 @@ export default {
       this.assign.vendor_id = this.user_details._id
       this.$store.dispatch('assignCompanyRider', [this.assign,this.$store.state.auth.headers])
         .then((resp) => {
-            this.error = ''
-            this.success = ''
+            this.error = null
+            this.success = null
             if(resp.data.error){
               toastr.error(resp.data.msg)
               this.error = resp.data.msg
@@ -528,8 +528,8 @@ export default {
         let component = this;
         this.$store.dispatch('updateUser', [component.user_details,this.$store.state.auth.headers])
         .then((resp) => {
-          this.error = ''
-          this.success = ''
+          this.error = null
+          this.success = null
           if(resp.data.error){
             toastr.error(resp.data.msg)
             this.error = resp.data.msg
@@ -540,15 +540,21 @@ export default {
           }
         })
         .catch(err => {
-            this.error = 'please verify that the data entered are correct.'
+          this.error = null
+          let msg = '';
+          if(this.user_details.profile_image !== ''){
+            msg += 'your file size should not be greater than 2mb and ';
+          }
+          msg += 'please verify that data entered are correct.';
+          this.error = msg;
         })
     },
     updateCompany(){
         let component = this;
         this.$store.dispatch('updateCompany', [component.company,this.$store.state.auth.headers])
         .then((resp) => {
-          this.error = ''
-          this.success = ''
+          this.error = null
+          this.success = null
           if(resp.data.error){
             toastr.error(resp.data.msg)
             this.error = resp.data.msg
@@ -567,7 +573,8 @@ export default {
           }
         })
         .catch(err => {
-            this.error = 'please verify that the data entered are correct.'
+          this.error = null
+          this.error = 'please verify that the data entered are correct.'
         })
     },
     checkCompanyForm: function (e) {
