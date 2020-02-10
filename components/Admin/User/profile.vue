@@ -106,7 +106,7 @@
                 >
               </li>
               <li><a href="#tab-bottom-left5" role="tab" data-toggle="tab" v-if="orders.length > 0">Orders</a></li>
-              <li><a href="#tab-bottom-left6" role="tab" data-toggle="tab" v-if="companies.length > 0">Companies</a></li>
+              <li><a href="#tab-bottom-left6" role="tab" data-toggle="tab">Companies</a></li>
             </ul>
           </div>
           <div class="tab-content">
