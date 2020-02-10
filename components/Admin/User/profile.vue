@@ -412,7 +412,7 @@ export default {
         email: '',
         phone: '',
         address: '',
-        image: ''
+        image_url: ''
       },
       image: '',
       activities:[],
@@ -568,7 +568,7 @@ export default {
               email: '',
               phone: '',
               address: '',
-              image: ''
+              image_url: ''
             },
             this.getUserCompany();
           }
@@ -579,7 +579,7 @@ export default {
         })
     },
     checkCompanyForm: function (e) {
-        if (this.company.name && this.company.email && this.company.address && this.company.phone && this.company.image) {
+        if (this.company.name && this.company.email && this.company.address && this.company.phone && this.company.image_url) {
         this.updateCompany();
         return true;
         }
@@ -599,7 +599,7 @@ export default {
         if (!this.company.address) {
           this.errors.push('Address required.');
         }
-        if (!this.company.image) {
+        if (!this.company.image_url) {
           this.errors.push('Image required.');
         }
         e.preventDefault();
@@ -664,7 +664,7 @@ export default {
       var vm = this;
 
       reader.onload = (e) => {
-        vm.company.image = e.target.result;
+        vm.company.image_url = e.target.result;
       };
       reader.readAsDataURL(file);
     },
