@@ -551,7 +551,7 @@ export default {
     },
     updateCompany(){
         let component = this;
-        this.$store.dispatch('updateCompany', [component.company,this.$store.state.auth.headers])
+        this.$store.dispatch((component.company._id) ? 'updateCompany' : 'addCompany', [component.company,this.$store.state.auth.headers])
         .then((resp) => {
           this.error = null
           this.success = null
