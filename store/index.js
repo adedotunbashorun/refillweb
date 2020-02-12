@@ -3,6 +3,7 @@
 import Vuex from 'vuex'
 import auth from './auth'
 import classes from './class'
+import contacts from './contact'
 import settings from './settings'
 import supports from './supports'
 import orders from './orders'
@@ -15,6 +16,7 @@ const store = () => {
     modules: {
       auth,
       classes,
+      contacts,
       company,
       orders,
       payments,

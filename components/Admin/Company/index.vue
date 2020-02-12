@@ -26,7 +26,7 @@
                 </span>
                 <span v-else-if="props.column.field == 'action'">
                   <div>
-                    <nuxt-link
+                    <nuxt-link v-if="props.row.user_id"
                       class="btn btn-info"
                       :to="{
                         name: 'admin-users-id',
@@ -58,7 +58,7 @@
                   </div>
                 </span>
                 <span v-else-if="props.column.field == 'vendor'">
-                  {{ props.row.user_id.first_name + ' ' + props.row.user_id.last_name }}
+                  {{ (props.row.user_id) ? props.row.user_id.first_name + ' ' + props.row.user_id.last_name : '' }}
                 </span>
                 <span v-else-if="props.column.field == 'email'">
                   {{ props.row.email }}

@@ -27,7 +27,7 @@ const allApprovedCompanies = (header) => {
 
 const approveCompany = (data,header) => {
   return new Promise((resolve, reject) => {
-      axios.patch(config.apiUrl + '/api/company/approve/'+ data, { headers: { Authorization: header } })
+      axios.patch(config.apiUrl + '/api/company/approve/'+ data, data,{ headers: { Authorization: header } })
           .then(resp => {
               resolve(resp)
           })
