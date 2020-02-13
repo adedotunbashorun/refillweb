@@ -1,5 +1,5 @@
 <template>
-    <Messages :page="page" :supports="supports"/>
+    <Messages :page="page" :messages="messages"/>
 </template>
 <script>
 export default {
@@ -13,19 +13,16 @@ export default {
         Messages: () => import('~/components/Admin/Message/index.vue')
     },
     mounted(){
-        this.getSupports()
+        this.getMessages()
     },
     computed:{
-        supports(){
-            return this.$store.getters.allSupports
+        messages(){
+            return this.$store.getters.allMessages
         },
-        user(){
-          return this.$store.getters.authUser
-        }
     },
     methods:{
-        getSupports(){
-            this.$store.dispatch('allSupports', [this.$store.getters.authUser.user_type, this.$store.getters.authUser._id,this.$store.state.auth.headers])
+        getMessages(){
+            this.$store.dispatch('allMessages', this.$store.state.auth.headers)
             .then((resp) => {
             }).catch(err => console.log())
         }

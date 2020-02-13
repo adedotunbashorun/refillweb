@@ -7,7 +7,9 @@ export default {
   state: {
     contacts: [],
     error: '',
-    contact: {},
+    contact: null,
+    messages: [],
+    message: null,
     showLoader: false,
   },
   mutations,

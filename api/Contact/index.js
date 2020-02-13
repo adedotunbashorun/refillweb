@@ -13,6 +13,29 @@ const allContact = (header) => {
     })
 }
 
+const allMessages = (header) => {
+  return new Promise((resolve, reject) => {
+      axios.get(config.apiUrl + '/api/messages', { headers: { Authorization: header } })
+          .then(resp => {
+              resolve(resp)
+          })
+          .catch(err => {
+              reject(err)
+          })
+  })
+}
+
+const createMessage = (data, header) => {
+  return new Promise((resolve, reject) => {
+      axios.post(config.apiUrl + '/api/message', data, {headers:{ Authorization: header}})
+          .then(resp => {
+              resolve(resp)
+          })
+          .catch(err => {
+              reject(err)
+          })
+  })
+}
 
 const contactById = (data, header) => {
     return new Promise((resolve, reject) => {
@@ -24,6 +47,18 @@ const contactById = (data, header) => {
                 reject(err)
             })
     })
+}
+
+const messageById = (data, header) => {
+  return new Promise((resolve, reject) => {
+      axios.get(config.apiUrl + '/api/messages/'+data, {headers:{ Authorization: header}})
+          .then(resp => {
+              resolve(resp)
+          })
+          .catch(err => {
+              reject(err)
+          })
+  })
 }
 
 const replyContact = (data, header) => {
@@ -55,4 +90,7 @@ export const Contact = {
     contactById,
     deletecontact,
     replyContact,
+    allMessages,
+    messageById,
+    createMessage,
 }

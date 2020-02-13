@@ -25,9 +25,10 @@
                       <label class="form-control-label" for="input-type">Users</label>
                       <select  type="text" id="input-type" class="form-control form-control-alternative" v-model="message.user">
                         <option value="">Select User</option>
-                        <option value="rider">Rider</option>
+                        <option value="admin">Administrator</option>
                         <option value="client">Client</option>
                         <option value="vendor">Vendor</option>
+                        <option value="rider">Rider</option>
                         <option value="all">All</option>
                       </select>
                     </div>
@@ -86,8 +87,8 @@ export default {
         return {
           errors: [],
           priorities: [],
-          error:'',
-          success:'',
+          error: null,
+          success: null,
           message:{
             user: '',
             message:'',
@@ -97,33 +98,29 @@ export default {
         }
     },
     methods: {
-      create(){
-        let component = this;
-            this.$store.dispatch('addSupport', [component.support,this.$store.state.auth.headers])
-            .then((resp) => {
-               this.error = ''
-                this.success = ''
-                if(resp.data.error){
-                  toastr.error(resp.data.msg)
-                  this.error = resp.data.msg
-                }else{
-                  toastr.success(resp.data.msg)
-                  this.success = ''
-                  this.success = resp.data.msg
-                  this.support= {
-                    dispute_priority_id: '',
-                    message:'',
-                    title:'',
-                    user: this.user
-                  }
-                  this.errors = []
-                }
-            })
-            .catch(err => {
-                this.error = ''
-                this.error = err.message
-                console.log(err)
-            })
+      async create(){
+        try {
+          const resp = await this.$store.dispatch('createMessage', [this.message,this.$store.state.auth.headers]);
+          this.error = null
+          this.success = null
+          if(resp.data.error){
+            toastr.error(resp.data.msg)
+            this.error = resp.data.msg
+          }else{
+            toastr.success(resp.data.msg)
+            this.success = resp.data.msg
+            this.message = {
+              user: '',
+              message:'',
+              subject:'',
+              medium: '',
+            }
+            this.errors = []
+          }
+        } catch (error) {
+          this.error = error.message
+        }
+
       },
       checkForm: function (e) {
         if (this.message.subject && this.message.user && this.message.message && this.message.medium ) {

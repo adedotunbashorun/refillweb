@@ -6,7 +6,7 @@ export default {
     layout: 'admin',
     data(){
       return{
-        page : 'Create Supports'
+        page : 'Create Message'
       }
     },
     components:{

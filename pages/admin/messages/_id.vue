@@ -1,8 +1,7 @@
 <template>
-    <ReplySupport :page='page' :user="user" />
+    <Message :page='page' :message="message" />
 </template>
 <script>
-import ReplySupport from '~/components/Admin/Supports/ReplySupport.vue'
 export default {
     layout: 'admin',
     data(){
@@ -11,12 +10,22 @@ export default {
       }
     },
     components:{
-        ReplySupport
+        Message: () => import('~/components/Admin/Message/view.vue')
     },
     computed:{
-      user(){
-          return this.$store.getters.authUser
+      message(){
+          return this.$store.getters.message
       }
-    }
+    },
+    methods:{
+      getMessage(){
+          this.$store.dispatch('messageById', [this.$nuxt._route.params.id,this.$store.state.auth.headers])
+          .then((resp) => {
+          }).catch(err => console.log())
+      },
+    },
+    mounted(){
+      this.getMessage()
+    },
 }
 </script>

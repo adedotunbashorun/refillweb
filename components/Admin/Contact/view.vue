@@ -4,7 +4,7 @@
     <div class="row">
       <div class="col-md-4">
         <div class="panel">
-          <div class="mt-element-list">
+          <div class="mt-element-list" v-if="contact">
               <div class="mt-list-head list-news font-white bg-blue">
                   <div class="list-head-title-container">
                       <h4 class="list-title">Contact Information</h4>
@@ -39,7 +39,7 @@
               <span class="text-uppercase panel-subtitle">Fill form to reply</span>
           </div>
           <div class="panel-body">
-            <form @submit.prevent="checkForm" v-if="data">
+            <form @submit.prevent="checkForm">
                 <p v-if="errors.length">
                     <b>Please correct the following error(s):</b>
                     <ul>
@@ -49,11 +49,11 @@
                 <div class="alert alert-success" v-if="success"><button type="button" class="pi-close" data-dismiss="alert"><i class="material-icons" data-dismiss="alert">close</i></button>{{ success }}</div>
                 <div class="alert alert-danger" v-if="error"><button type="button" class="pi-close" data-dismiss="alert"><i class="material-icons" data-dismiss="alert">close</i></button>{{ error }}</div>
 
-                <div class="form-group">
+                <div class="form-group" v-if="contact">
                     <input type="text" class="form-control" :value="contact.email" disabled>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" v-if="contact">
                     <input type="text" class="form-control" :value="'Re: '+contact.subject" placeholder="Subject" disabled>
                 </div>
 
